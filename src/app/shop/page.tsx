@@ -1,11 +1,12 @@
 "use client"
-import React, { useEffect } from 'react';
+export const dynamic = 'force-dynamic'
+import React, { useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Header from '../components/Header';
 import ProductGrid from '../components/ProductGrid';
 import { useShop } from '../context/ShopContext';
 
-export default function ShopPage() {
+function ShopContent() {
   const { setFilters } = useShop();
   const searchParams = useSearchParams();
 
@@ -16,10 +17,16 @@ export default function ShopPage() {
     if (cat) setFilters(p => ({ ...p, categoryId: parseInt(cat) }));
   }, [searchParams]);
 
+  return <ProductGrid />;
+}
+
+export default function ShopPage() {
   return (
     <div className="min-h-screen bg-[#F5F5F0]">
       <Header />
-      <ProductGrid />
+      <Suspense fallback={<div className="min-h-screen bg-[#F5F5F0]" />}>
+        <ShopContent />
+      </Suspense>
     </div>
   );
 }

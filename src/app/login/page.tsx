@@ -1,6 +1,7 @@
 "use client"
+export const dynamic = 'force-dynamic'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -14,7 +15,7 @@ const PERKS = [
   { icon: ShieldCheck, text: '100% authentic products guaranteed' },
 ];
 
-export default function LoginPage() {
+function LoginContent() {
   const { login, isAuthenticated, hydrated } = useShop();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -197,5 +198,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <LoginContent />
+    </Suspense>
   );
 }

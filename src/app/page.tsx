@@ -1,4 +1,5 @@
 "use client"
+export const dynamic = 'force-dynamic'
 
 import React from 'react';
 import Link from 'next/link';
@@ -101,10 +102,12 @@ function HomeContent() {
                   onClick={() => setFilters(prev => ({ ...prev, categoryId: cat.id }))}
                   className="block group cursor-pointer">
                   <div className="relative overflow-hidden rounded-sm aspect-square mb-3">
-                    <img
-                      src={CATEGORY_IMAGES[cat.name] || 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=300&fit=crop'}
+                    <Image
+                      src={CATEGORY_IMAGES[cat.name] || 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&h=600&fit=crop&crop=entropy&auto=format&q=80'}
                       alt={cat.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      unoptimized
                     />
                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                     <div className="absolute inset-0 flex items-end p-3">
@@ -166,10 +169,12 @@ function HomeContent() {
                 </span>
               </div>
               <div className="absolute right-0 top-0 bottom-0 w-44 overflow-hidden opacity-30 group-hover:opacity-50 transition-opacity">
-                <img
-                  src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&fit=crop"
+                <Image
+                  src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=400&fit=crop&auto=format&q=80"
                   alt=""
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  unoptimized
                 />
               </div>
             </motion.div>
@@ -189,10 +194,12 @@ function HomeContent() {
                 </span>
               </div>
               <div className="absolute right-0 top-0 bottom-0 w-44 overflow-hidden opacity-30 group-hover:opacity-50 transition-opacity">
-                <img
-                  src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&fit=crop"
+                <Image
+                  src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&h=400&fit=crop&auto=format&q=80"
                   alt=""
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  unoptimized
                 />
               </div>
             </motion.div>

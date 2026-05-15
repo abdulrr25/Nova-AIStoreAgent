@@ -1,6 +1,7 @@
 "use client"
+export const dynamic = 'force-dynamic'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -45,7 +46,7 @@ const BENEFITS = [
   { icon: Zap,   text: 'Early access to new arrivals & seasonal sales' },
 ];
 
-export default function RegisterPage() {
+function RegisterContent() {
   const { register, isAuthenticated, hydrated } = useShop();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -243,5 +244,13 @@ export default function RegisterPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <RegisterContent />
+    </Suspense>
   );
 }
