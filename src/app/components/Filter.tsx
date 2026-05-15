@@ -1,196 +1,147 @@
 "use client"
-
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { ChevronDown, ChevronUp, X } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
-import { categories } from '../data/products';
-import { X } from 'lucide-react';
+import { formatPrice } from '../data/products';
 
-interface FilterState {
-  category: string;
-  subcategory: string;
-  priceRange: [number, number];
-  sizes: string[];
-  inStock: boolean;
-  isNew: boolean;
+function Section({ title, children, defaultOpen = true }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="border-b border-[#E5E7EB] py-4">
+      <button onClick={() => setOpen(v => !v)} className="w-full flex items-center justify-between mb-3">
+        <span className="text-[10px] font-extrabold text-[#111111] tracking-widest uppercase">{title}</span>
+        {open
+          ? <ChevronUp className="w-4 h-4 text-[#6B7280]" />
+          : <ChevronDown className="w-4 h-4 text-[#6B7280]" />}
+      </button>
+      {open && children}
+    </div>
+  );
 }
 
-interface FilterProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+interface FilterProps { isOpen: boolean; onClose: () => void; }
 
-const Filter = ({ isOpen, onClose }: FilterProps) => {
-  const { filters, setFilters, clearFilters } = useShop();
+export default function Filter({ isOpen, onClose }: FilterProps) {
+  const { categories, filters, setFilters, clearFilters } = useShop();
 
-  const handleCategoryChange = (category: string) => {
-    setFilters((prev: FilterState) => ({
-      ...prev,
-      category,
-      subcategory: ''
-    }));
-  };
-
-  const handleSubcategoryChange = (subcategory: string) => {
-    setFilters((prev: FilterState) => ({
-      ...prev,
-      subcategory
-    }));
-  };
-
-  const handlePriceChange = (range: [number, number]) => {
-    setFilters((prev: FilterState) => ({
-      ...prev,
-      priceRange: range
-    }));
-  };
-
-  const handleSizeChange = (size: string) => {
-    setFilters((prev: FilterState) => ({
-      ...prev,
-      sizes: prev.sizes.includes(size)
-        ? prev.sizes.filter(s => s !== size)
-        : [...prev.sizes, size]
-    }));
-  };
-
-  const handleInStockChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters((prev: FilterState) => ({
-      ...prev,
-      inStock: e.target.checked
-    }));
-  };
-
-  const handleIsNewChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters((prev: FilterState) => ({
-      ...prev,
-      isNew: e.target.checked
-    }));
-  };
-
-  const filterContent = (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold mb-4 text-gray-800">Categories</h3>
-        <div className="space-y-2">
-          {categories.map(category => (
-            <div key={category.id}>
-              <button
-                onClick={() => handleCategoryChange(category.id)}
-                className={`w-full text-left px-3 py-2 rounded-md transition-colors ${
-                  filters.category === category.id
-                    ? 'bg-accent text-white shadow-sm'
-                    : 'hover:bg-gray-100'
-                }`}
-              >
-                {category.name}
-              </button>
-              {filters.category === category.id && (
-                <div className="ml-4 mt-2 space-y-1">
-                  {category.subcategories.map(sub => (
-                    <button
-                      key={sub}
-                      onClick={() => handleSubcategoryChange(sub)}
-                      className={`block w-full text-left px-3 py-1 rounded-md text-sm transition-colors ${
-                        filters.subcategory === sub
-                          ? 'bg-accent/20 text-accent'
-                          : 'hover:bg-gray-100'
-                      }`}
-                    >
-                      {sub}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+  const content = (
+    <div>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-1 pb-4 border-b border-[#E5E7EB]">
+        <span className="text-sm font-extrabold text-[#111111] uppercase tracking-widest">Filters</span>
+        <button
+          onClick={clearFilters}
+          className="text-[10px] font-bold text-[#E84545] hover:underline uppercase tracking-widest transition-colors">
+          CLEAR ALL
+        </button>
       </div>
 
-      <div>
-        <h3 className="text-lg font-semibold mb-4 text-gray-800">Price Range</h3>
-        <input
-          type="range"
-          min="0"
-          max="1000"
-          value={filters.priceRange[1]}
-          onChange={(e) => handlePriceChange([filters.priceRange[0], parseInt(e.target.value)])}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-accent"
-        />
-        <div className="flex justify-between mt-2 text-sm text-gray-600">
-          <span>${filters.priceRange[0]}</span>
-          <span>${filters.priceRange[1]}</span>
-        </div>
-      </div>
-
-      <div>
-        <h3 className="text-lg font-semibold mb-4 text-gray-800">Sizes</h3>
-        <div className="flex flex-wrap gap-2">
-          {['XS', 'S', 'M', 'L', 'XL'].map(size => (
+      {/* Categories */}
+      <Section title="Category">
+        <div className="space-y-0.5">
+          <button
+            onClick={() => setFilters(p => ({ ...p, categoryId: null }))}
+            className={`w-full text-left py-2 px-2.5 text-xs font-medium transition-all rounded-sm ${
+              filters.categoryId === null
+                ? 'bg-[#E84545] text-white font-bold'
+                : 'text-[#111111] hover:bg-[#F3F4F6]'
+            }`}>
+            All Categories
+          </button>
+          {categories.map(cat => (
             <button
-              key={size}
-              onClick={() => handleSizeChange(size)}
-              className={`px-3 py-1 rounded-md border transition-colors ${
-                filters.sizes.includes(size)
-                  ? 'bg-accent text-white border-accent shadow-sm'
-                  : 'border-gray-200 hover:border-accent'
-              }`}
-            >
-              {size}
+              key={cat.id}
+              onClick={() => setFilters(p => ({ ...p, categoryId: cat.id }))}
+              className={`w-full text-left py-2 px-2.5 text-xs font-medium flex items-center justify-between transition-all rounded-sm ${
+                filters.categoryId === cat.id
+                  ? 'bg-[#E84545] text-white font-bold'
+                  : 'text-[#111111] hover:bg-[#F3F4F6]'
+              }`}>
+              <span>{cat.name}</span>
+              {filters.categoryId === cat.id && (
+                <span className="w-4 h-4 bg-white/30 flex items-center justify-center text-[9px] font-bold rounded-sm">✓</span>
+              )}
             </button>
           ))}
         </div>
-      </div>
+      </Section>
 
-      <div className="space-y-3">
-        <label className="flex items-center space-x-3 cursor-pointer">
+      {/* Price Range */}
+      <Section title="Price Range">
+        <div className="px-1">
           <input
-            type="checkbox"
-            checked={filters.inStock}
-            onChange={handleInStockChange}
-            className="w-4 h-4 rounded text-accent focus:ring-accent border-gray-300"
+            type="range" min="0" max="200000" step="1000"
+            value={filters.priceRange[1]}
+            onChange={e => setFilters(p => ({ ...p, priceRange: [p.priceRange[0], parseInt(e.target.value)] }))}
+            className="w-full h-1.5 appearance-none bg-[#E5E7EB] rounded-full cursor-pointer accent-[#E84545]"
           />
-          <span className="text-gray-700">In Stock Only</span>
-        </label>
-        <label className="flex items-center space-x-3 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={filters.isNew}
-            onChange={handleIsNewChange}
-            className="w-4 h-4 rounded text-accent focus:ring-accent border-gray-300"
-          />
-          <span className="text-gray-700">New Arrivals</span>
-        </label>
-      </div>
+          <div className="flex justify-between mt-2.5 text-xs text-[#6B7280] font-medium">
+            <span>{formatPrice(0)}</span>
+            <span className="text-[#E84545] font-bold">{formatPrice(filters.priceRange[1])}</span>
+          </div>
+        </div>
+      </Section>
 
-      <button
-        onClick={clearFilters}
-        className="w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors text-gray-700 font-medium"
-      >
-        Clear Filters
-      </button>
+      {/* Availability */}
+      <Section title="Availability">
+        <label className="flex items-center gap-3 cursor-pointer py-1 group">
+          <div
+            onClick={() => setFilters(p => ({ ...p, inStock: !p.inStock }))}
+            className={`w-4 h-4 border-2 flex items-center justify-center transition-all cursor-pointer rounded-sm ${
+              filters.inStock ? 'bg-[#E84545] border-[#E84545]' : 'border-[#D1D5DB] group-hover:border-[#E84545]'
+            }`}>
+            {filters.inStock && <span className="text-white text-[9px] font-bold">✓</span>}
+          </div>
+          <span className="text-xs text-[#111111] font-medium group-hover:text-[#E84545] transition-colors">In Stock Only</span>
+        </label>
+      </Section>
+
+      {/* Rating */}
+      <Section title="Customer Rating">
+        <div className="space-y-1">
+          {[4, 3, 2].map(r => (
+            <label key={r} className="flex items-center gap-3 py-1.5 cursor-pointer group">
+              <div className="w-4 h-4 border-2 border-[#D1D5DB] group-hover:border-[#E84545] transition-colors rounded-sm flex-shrink-0" />
+              <span className="text-xs text-[#111111] group-hover:text-[#E84545] transition-colors font-medium flex items-center gap-1">
+                {r}
+                <span className="text-[#F59E0B]">★</span>
+                & above
+              </span>
+            </label>
+          ))}
+        </div>
+      </Section>
     </div>
   );
 
-  if (!isOpen) {
-    return null;
-  }
+  if (!isOpen) return null;
 
   return (
-    <div className="w-full h-full bg-white rounded-lg shadow-lg p-6">
-      <div className="flex justify-between items-center mb-6 lg:hidden">
-        <h2 className="text-xl font-semibold text-gray-800">Filters</h2>
-        <button
-          onClick={onClose}
-          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-          aria-label="Close filters"
-        >
-          <X className="w-5 h-5" />
-        </button>
+    <>
+      {/* Desktop sidebar */}
+      <div className="hidden lg:block w-full bg-white p-4 border border-[#E5E7EB] rounded-sm">
+        {content}
       </div>
-      {filterContent}
-    </div>
-  );
-};
 
-export default Filter; 
+      {/* Mobile drawer */}
+      <div className="lg:hidden fixed inset-0 bg-black/60 z-50 flex" onClick={onClose}>
+        <div
+          className="w-80 max-w-[85vw] bg-white h-full overflow-y-auto p-4"
+          onClick={e => e.stopPropagation()}>
+          <div className="flex justify-between items-center mb-4">
+            <span className="font-extrabold text-[#111111] text-sm uppercase tracking-widest">Filters</span>
+            <button onClick={onClose} className="p-1 hover:text-[#E84545] transition-colors">
+              <X className="w-5 h-5 text-[#111111]" />
+            </button>
+          </div>
+          {content}
+          <button
+            onClick={onClose}
+            className="w-full mt-4 py-3 bg-[#111111] text-white text-xs font-bold tracking-widest uppercase hover:bg-[#E84545] transition-colors rounded-sm">
+            APPLY FILTERS
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}

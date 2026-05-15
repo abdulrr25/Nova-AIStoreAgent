@@ -1,161 +1,165 @@
 "use client"
-
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { SlidersHorizontal, Grid2X2, LayoutList, ChevronDown, Loader2, Package } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import ProductCard from './ProductCard';
 import Filter from './Filter';
-import { SlidersHorizontal, Grid, List, ChevronDown } from 'lucide-react';
-import { products } from '../data/products';
 
-const ProductGrid = () => {
-  const { filters } = useShop();
+const SORT_OPTIONS = [
+  { value: 'default',    label: 'Recommended' },
+  { value: 'new',        label: "What's New" },
+  { value: 'price-low',  label: 'Price: Low to High' },
+  { value: 'price-high', label: 'Price: High to Low' },
+  { value: 'rating',     label: 'Rating' },
+];
+
+export default function ProductGrid() {
+  const { products, loadingProducts, filters, setFilters, clearFilters } = useShop();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [gridView, setGridView] = useState<'grid' | 'list'>('grid');
-  const [sortBy, setSortBy] = useState('featured');
+  const [sortBy, setSortBy] = useState('default');
+  const [showSort, setShowSort] = useState(false);
 
-  const filteredProducts = products.filter(product => {
-    // Category filter
-    if (filters.category && product.category !== filters.category) return false;
-    
-    // Subcategory filter
-    if (filters.subcategory && product.subcategory !== filters.subcategory) return false;
-    
-    // Price range filter
-    if (Number(product.price) < filters.priceRange[0] || Number(product.price) > filters.priceRange[1]) return false;
-    
-    // Sizes filter
-    if (filters.sizes.length > 0 && !filters.sizes.some(size => product.sizes.includes(size))) return false;
-    
-    // In stock filter
-    if (filters.inStock && !product.inStock) return false;
-    
-    // New arrivals filter
-    if (filters.isNew && !product.isNew) return false;
-    
-    return true;
-  });
-
-  // Sort products based on selected option
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortBy === 'price-low') return Number(a.price) - Number(b.price);
-    if (sortBy === 'price-high') return Number(b.price) - Number(a.price);
-    if (sortBy === 'rating') return b.rating - a.rating;
-    // Default: featured/newest
-    return a.isNew ? -1 : 1;
-  });
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
+  const filtered = useMemo(() => {
+    let list = [...products];
+    if (filters.categoryId !== null) list = list.filter(p => p.category.id === filters.categoryId);
+    if (filters.searchQuery) {
+      const q = filters.searchQuery.toLowerCase();
+      list = list.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.category.name.toLowerCase().includes(q)
+      );
     }
-  };
+    list = list.filter(p => p.price >= filters.priceRange[0] && p.price <= filters.priceRange[1]);
+    if (filters.inStock) list = list.filter(p => p.stock > 0);
+    return list;
+  }, [products, filters]);
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-  };
+  const sorted = useMemo(() => {
+    const list = [...filtered];
+    if (sortBy === 'price-low') return list.sort((a, b) => Number(a.price) - Number(b.price));
+    if (sortBy === 'price-high') return list.sort((a, b) => Number(b.price) - Number(a.price));
+    if (sortBy === 'rating') return list.sort((a, b) => b.id % 5 - a.id % 5);
+    if (sortBy === 'new') return list.sort((a, b) => b.id - a.id);
+    return list;
+  }, [filtered, sortBy]);
+
+  if (loadingProducts) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px] bg-[#F5F5F0]">
+        <div className="text-center">
+          <Loader2 className="w-10 h-10 animate-spin text-[#E84545] mx-auto mb-3" />
+          <p className="text-[#6B7280] text-sm tracking-wide">Loading products...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="w-full py-12">
-        <div className="flex flex-col lg:flex-row gap-8 w-full">
-          {/* Filter Button for Mobile */}
-          <button
-            onClick={() => setIsFilterOpen(true)}
-            className="lg:hidden flex items-center justify-center gap-2 px-6 py-3 bg-accent text-white rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            <SlidersHorizontal className="w-5 h-5" />
-            Filters
-          </button>
+    <div className="bg-[#F5F5F0] min-h-screen">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="flex gap-0">
 
-          {/* Filter Sidebar */}
-          <div className="hidden lg:block lg:w-80 flex-shrink-0">
-            <div className="sticky top-8">
+          {/* Desktop filter sidebar */}
+          <div className="hidden lg:block w-[280px] flex-shrink-0 min-h-screen">
+            <div className="sticky top-[105px] max-h-[calc(100vh-105px)] overflow-y-auto p-4">
               <Filter isOpen={true} onClose={() => {}} />
             </div>
           </div>
 
-          {/* Mobile Filter */}
-          <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} />
+          {/* Products area */}
+          <div className="flex-1 min-w-0">
+            {/* Toolbar */}
+            <div className="bg-white border-b border-[#E5E7EB] px-6 py-3 flex items-center justify-between sticky top-[105px] z-10">
+              <div className="flex items-center gap-3">
+                {/* Mobile filter trigger */}
+                <button
+                  onClick={() => setIsFilterOpen(true)}
+                  className="lg:hidden flex items-center gap-2 text-[10px] font-bold text-[#111111] uppercase tracking-widest border border-[#E5E7EB] px-3 py-2 hover:border-[#E84545] hover:text-[#E84545] transition-colors rounded-sm">
+                  <SlidersHorizontal className="w-3.5 h-3.5" /> Filter
+                </button>
+                <span className="text-xs text-[#6B7280] font-medium">
+                  <span className="font-bold text-[#111111]">{sorted.length}</span> items
+                </span>
+              </div>
 
-          {/* Products Section */}
-          <div className="flex-1 w-full">
-            {/* Grid View Controls */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8">
               <div className="flex items-center gap-4">
-                <h2 className="text-3xl font-bold text-gray-800">
-                  {filteredProducts.length} Products
-                </h2>
-                <div className="hidden sm:flex items-center gap-2 text-sm text-gray-600">
-                  <span>Sort by:</span>
-                  <button className="flex items-center gap-1 px-3 py-1.5 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
-                    Featured
-                    <ChevronDown className="w-4 h-4" />
+                {/* Sort dropdown */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowSort(v => !v)}
+                    className="flex items-center gap-1.5 text-[10px] font-bold text-[#111111] uppercase tracking-widest hover:text-[#E84545] transition-colors">
+                    Sort: {SORT_OPTIONS.find(o => o.value === sortBy)?.label}
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showSort ? 'rotate-180' : ''}`} />
+                  </button>
+                  {showSort && (
+                    <>
+                      <div className="fixed inset-0 z-10" onClick={() => setShowSort(false)} />
+                      <div className="absolute right-0 top-full mt-2 bg-white shadow-xl border border-[#E5E7EB] w-52 z-20 rounded-sm">
+                        {SORT_OPTIONS.map(opt => (
+                          <button key={opt.value} onClick={() => { setSortBy(opt.value); setShowSort(false); }}
+                            className={`w-full text-left px-4 py-2.5 text-xs transition-colors ${
+                              sortBy === opt.value
+                                ? 'text-[#E84545] font-bold bg-[#FFF0F0]'
+                                : 'text-[#111111] hover:bg-[#F9FAFB]'
+                            }`}>
+                            {opt.label}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/* View toggle */}
+                <div className="flex items-center gap-0.5 border border-[#E5E7EB] rounded-sm p-0.5">
+                  <button
+                    onClick={() => setGridView('grid')}
+                    className={`p-1.5 rounded-sm transition-colors ${gridView === 'grid' ? 'bg-[#111111] text-white' : 'text-[#6B7280] hover:text-[#111111]'}`}>
+                    <Grid2X2 className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => setGridView('list')}
+                    className={`p-1.5 rounded-sm transition-colors ${gridView === 'list' ? 'bg-[#111111] text-white' : 'text-[#6B7280] hover:text-[#111111]'}`}>
+                    <LayoutList className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setGridView('grid')}
-                  className={`p-2.5 rounded-xl transition-all duration-300 ${
-                    gridView === 'grid'
-                      ? 'bg-accent text-white shadow-lg'
-                      : 'bg-white hover:bg-gray-50 shadow-sm hover:shadow-md'
-                  }`}
-                  aria-label="Grid view"
-                >
-                  <Grid className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => setGridView('list')}
-                  className={`p-2.5 rounded-xl transition-all duration-300 ${
-                    gridView === 'list'
-                      ? 'bg-accent text-white shadow-lg'
-                      : 'bg-white hover:bg-gray-50 shadow-sm hover:shadow-md'
-                  }`}
-                  aria-label="List view"
-                >
-                  <List className="w-5 h-5" />
-                </button>
-              </div>
             </div>
 
-            {/* Products Grid */}
-            <div className={`grid gap-8 ${
-              gridView === 'grid'
-                ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4'
-                : 'grid-cols-1'
-            }`}>
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map(product => (
-                  <motion.div
-                    key={product.id}
-                    className="h-full"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <ProductCard
-                      product={product}
-                      view={gridView}
-                    />
-                  </motion.div>
-                ))
-              ) : (
-                <div className="col-span-full text-center py-16 bg-white rounded-2xl shadow-lg">
-                  <p className="text-l text-gray-600">No products found matching your filters.</p>
+            {/* Mobile filter drawer */}
+            <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} />
+
+            {/* Product grid / list */}
+            <div className="p-4 lg:p-6">
+              {sorted.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-28 text-center">
+                  <Package className="w-16 h-16 text-[#E5E7EB] mx-auto mb-4" />
+                  <p className="text-xl font-extrabold text-[#111111] mb-2 uppercase tracking-wide">No results found</p>
+                  <p className="text-[#6B7280] text-sm mb-6 max-w-xs">Try adjusting your filters or searching for something different.</p>
                   <button
-                    onClick={() => window.location.reload()}
-                    className="mt-4 px-6 py-2 bg-accent text-white rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-md hover:shadow-lg"
-                  >
-                    Reset Filters
+                    onClick={clearFilters}
+                    className="border-2 border-[#111111] text-[#111111] px-8 py-2.5 text-xs font-bold tracking-widest uppercase hover:bg-[#111111] hover:text-white transition-colors rounded-sm">
+                    CLEAR ALL FILTERS
                   </button>
+                </div>
+              ) : (
+                <div className={
+                  gridView === 'grid'
+                    ? 'grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5'
+                    : 'space-y-4'
+                }>
+                  {sorted.map((product, i) => (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: Math.min(i * 0.02, 0.4), duration: 0.25 }}>
+                      <ProductCard product={product} view={gridView} />
+                    </motion.div>
+                  ))}
                 </div>
               )}
             </div>
@@ -164,6 +168,4 @@ const ProductGrid = () => {
       </div>
     </div>
   );
-};
-
-export default ProductGrid;
+}

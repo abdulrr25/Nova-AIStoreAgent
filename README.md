@@ -1,38 +1,84 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NOVA — Full-Stack E-Commerce App
+
+A complete e-commerce application built with **Next.js 14** (frontend) and **Spring Boot** (backend).
+
+---
+
+## Project Structure
+
+```
+ClothingWebsite/
+├── src/                   # Next.js frontend (App Router)
+│   └── app/
+│       ├── components/    # Header, ProductCard, Cart, Filter …
+│       ├── context/       # ShopContext (cart, wishlist, auth)
+│       ├── lib/           # API client (api.ts)
+│       ├── product/[id]/  # Product detail page
+│       ├── shop/          # Shop / listing page
+│       ├── checkout/      # Multi-payment checkout
+│       ├── orders/        # Order history + detail
+│       ├── wishlist/      # Wishlist page
+│       ├── login/         # Login page
+│       └── register/      # Register page
+├── backend/               # Spring Boot REST API
+│   └── src/main/java/com/demo/ecommerce/
+│       ├── controller/    # REST endpoints
+│       ├── service/       # Business logic
+│       ├── model/         # JPA entities
+│       ├── repository/    # Spring Data repos
+│       ├── security/      # JWT auth filter
+│       └── config/        # Security, CORS, DataSeeder
+├── public/
+├── package.json
+└── tailwind.config.ts
+```
+
+---
+
+## Tech Stack
+
+| Layer     | Technology                                              |
+|-----------|---------------------------------------------------------|
+| Frontend  | Next.js 14, TypeScript, Tailwind CSS, Framer Motion     |
+| Backend   | Spring Boot 4, Spring Security 7, JWT                   |
+| Database  | MySQL 8                                                 |
+| Auth      | JWT (stateless)                                         |
+
+---
+
+## Features
+
+- User authentication (register / login / JWT)
+- Product listing with filters, search and sort
+- Product detail page with size and colour selector
+- Shopping cart (server-side, per user)
+- Wishlist (persisted to backend when logged in)
+- Checkout with UPI / Card / Net Banking / COD / Wallet
+- Unique order codes (`ORD-YYYYMM-XXXXXX`)
+- Order history and order detail pages
+- 110 seeded products across 5 categories with sizes and colours
+
+---
 
 ## Getting Started
 
-First, run the development server:
-
+### Backend
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd backend
+./mvnw spring-boot:run
+# Runs on http://localhost:8081
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Update `backend/src/main/resources/application.properties` with your MySQL credentials:
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce_db
+spring.datasource.username=root
+spring.datasource.password=yourpassword
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# ClothingWebsite
-# Shopify
+### Frontend
+```bash
+npm install
+npm run dev
+# Runs on http://localhost:3000
+```

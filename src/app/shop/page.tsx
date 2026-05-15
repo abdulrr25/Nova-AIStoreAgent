@@ -1,40 +1,25 @@
 "use client"
-
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Header from '../components/Header';
-import Filter from '../components/Filter';
 import ProductGrid from '../components/ProductGrid';
-import { ShopProvider } from '../context/ShopContext';
+import { useShop } from '../context/ShopContext';
 
-export default function Shop() {
+export default function ShopPage() {
+  const { setFilters } = useShop();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const q = searchParams.get('q');
+    if (q) setFilters(p => ({ ...p, searchQuery: q }));
+    const cat = searchParams.get('categoryId');
+    if (cat) setFilters(p => ({ ...p, categoryId: parseInt(cat) }));
+  }, [searchParams]);
+
   return (
-    <ShopProvider>
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        
-        <main className="container mx-auto px-4 py-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8"
-          >
-            <h1 className="text-4xl font-bold mb-4">All Products</h1>
-            <p className="text-gray-600">
-              Browse our complete collection of fashion items, jewelry, and perfumes.
-            </p>
-          </motion.div>
-
-          <div className="flex flex-col lg:flex-row gap-8">
-            <div>
-              
-            </div>
-            <div className="flex-1">
-              <ProductGrid />
-            </div>
-          </div>
-        </main>
-      </div>
-    </ShopProvider>
+    <div className="min-h-screen bg-[#F5F5F0]">
+      <Header />
+      <ProductGrid />
+    </div>
   );
-} 
+}
