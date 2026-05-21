@@ -49,6 +49,7 @@ export default function ProductCard({
   const [addedToCart, setAddedToCart] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   const rating = getProductRating(product.id);
   const inStock = product.stock > 0;
@@ -82,16 +83,23 @@ export default function ProductCard({
           href={`/product/${product.id}`}
           className="relative w-36 h-44 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100"
         >
-          {!imgLoaded && <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg" />}
-          <Image
-            src={imgSrc}
-            alt={product.name}
-            fill
-            className={`object-cover transition-opacity duration-300 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
-            unoptimized
-            onLoad={() => setImgLoaded(true)}
-            sizes="144px"
-          />
+          {!imgLoaded && !imgError && <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg" />}
+          {!imgError ? (
+            <Image
+              src={imgSrc}
+              alt={product.name}
+              fill
+              className={`object-cover transition-opacity duration-300 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+              unoptimized
+              onLoad={() => setImgLoaded(true)}
+              onError={() => setImgError(true)}
+              sizes="144px"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center rounded-lg">
+              <ShoppingBag className="w-8 h-8 text-gray-300" />
+            </div>
+          )}
           {!inStock && (
             <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-lg">
               <span className="text-[9px] font-bold text-gray-500 tracking-wider uppercase">Out of Stock</span>
@@ -163,16 +171,26 @@ export default function ProductCard({
             <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse" />
           )}
 
-          <Image
-            src={imgSrc}
-            alt={product.name}
-            fill
-            className={`object-cover transition-all duration-500 group-hover:scale-105
-                        ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
-            unoptimized
-            onLoad={() => setImgLoaded(true)}
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          />
+          {!imgError ? (
+            <Image
+              src={imgSrc}
+              alt={product.name}
+              fill
+              className={`object-cover transition-all duration-500 group-hover:scale-105
+                          ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+              unoptimized
+              onLoad={() => setImgLoaded(true)}
+              onError={() => setImgError(true)}
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+              <div className="text-center px-4">
+                <ShoppingBag className="w-10 h-10 text-gray-300 mx-auto mb-1" />
+                <p className="text-gray-400 text-[10px] line-clamp-2">{product.name}</p>
+              </div>
+            </div>
+          )}
 
           {/* Top-left badges */}
           <div className="absolute top-2.5 left-2.5 z-10 flex flex-col gap-1">

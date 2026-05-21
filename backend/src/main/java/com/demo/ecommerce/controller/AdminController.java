@@ -1,9 +1,14 @@
 package com.demo.ecommerce.controller;
 
+import com.demo.ecommerce.config.DataSeeder;
 import com.demo.ecommerce.model.Order;
 import com.demo.ecommerce.model.Product;
+import com.demo.ecommerce.repository.CartItemRepository;
+import com.demo.ecommerce.repository.CartRepository;
 import com.demo.ecommerce.repository.OrderRepository;
 import com.demo.ecommerce.repository.ProductRepository;
+import com.demo.ecommerce.repository.WishlistItemRepository;
+import com.demo.ecommerce.repository.WishlistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -21,6 +26,11 @@ public class AdminController {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final CartItemRepository cartItemRepository;
+    private final CartRepository cartRepository;
+    private final WishlistItemRepository wishlistItemRepository;
+    private final WishlistRepository wishlistRepository;
+    private final DataSeeder dataSeeder;
 
     @Value("${ADMIN_SECRET_KEY:nova-admin-2024}")
     private String adminSecretKey;
@@ -69,9 +79,7 @@ public class AdminController {
     }
 
     /**
-     * One-time migration: assigns sequential local image paths (/products/1.jpg ... /products/110.jpg)
-     * and resets every product's stock to 10.
-     * Products are processed in ascending ID order so the numbering stays consistent.
+     * One-time migration: assigns sequential local image paths and stock=10 to existing products.
      */
     @PostMapping("/fix-products")
     public ResponseEntity<?> fixProducts(
@@ -91,6 +99,32 @@ public class AdminController {
 
         return ResponseEntity.ok(Map.of(
                 "message", "Updated " + products.size() + " products with local images and stock=10"
+        ));
+    }
+
+    /**
+     * Wipes all data (orders, carts, wishlists, products, categories)
+     * and re-seeds with the latest product catalogue from DataSeeder.
+     * Use once after deploying a new product set.
+     */
+    @PostMapping("/reseed")
+    public ResponseEntity<?> reseed(
+            @RequestHeader(value = "X-Admin-Key", required = false) String key) {
+        if (!isAuthorized(key))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Unauthorized"));
+
+        // Clear FK-dependent tables first
+        cartItemRepository.deleteAll();
+        cartRepository.deleteAll();
+        wishlistItemRepository.deleteAll();
+        wishlistRepository.deleteAll();
+        orderRepository.deleteAll();   // cascades to order_items
+
+        // Re-seed products and categories
+        dataSeeder.seedAll();
+
+        return ResponseEntity.ok(Map.of(
+                "message", "Re-seeded " + productRepository.count() + " products across 5 categories"
         ));
     }
 }
