@@ -1,7 +1,6 @@
 import os
 import requests
 from google.adk.agents import Agent
-from google.adk.models.lite_llm import LiteLlm
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -65,7 +64,7 @@ def get_order_by_code(order_code: str) -> dict:
             "orderCode":     match.get("orderCode"),
             "customer":      match.get("user", {}).get("name"),
             "email":         match.get("user", {}).get("email"),
-            "status":        match.get("status"),
+            "orderStatus":   match.get("status"),
             "paymentStatus": match.get("paymentStatus"),
             "paymentMethod": match.get("paymentMethod"),
             "total":         match.get("totalAmount"),
@@ -196,11 +195,11 @@ def get_low_stock_products(threshold: int = 10) -> dict:
         return {"status": "error", "message": str(e)}
 
 
-# ── Agent ──────────────────────────────────────────────────────────────────
+# ── Agent — uses Gemini 2.0 Flash (native Google ADK, perfect tool calling) ──
 
 root_agent = Agent(
     name="nova_admin_agent",
-    model=LiteLlm(model="groq/llama-3.3-70b-specdec"),
+    model="gemini-2.0-flash",
     description="AI admin assistant for NOVA fashion e-commerce store.",
     instruction="""
 You are an intelligent admin assistant for NOVA, a fashion e-commerce store.
