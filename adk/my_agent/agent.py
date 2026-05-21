@@ -200,7 +200,7 @@ def get_low_stock_products(threshold: int = 10) -> dict:
 
 root_agent = Agent(
     name="nova_admin_agent",
-    model=LiteLlm(model="groq/llama-3.3-70b-versatile"),
+    model=LiteLlm(model="groq/llama-3.1-70b-versatile"),
     description="AI admin assistant for NOVA fashion e-commerce store.",
     instruction="""
 You are an intelligent admin assistant for NOVA, a fashion e-commerce store.

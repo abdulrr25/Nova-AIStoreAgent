@@ -27,7 +27,7 @@ export default function AdminPage() {
 
   const [messages, setMessages]   = useState<Message[]>([{
     role: 'assistant',
-    content: "👋 Hi! I'm your NOVA store AI assistant, powered by Google ADK + Llama 3.3.\n\nAsk me anything about your orders, customers, products, or revenue. Use the quick buttons below or type your own question.",
+    content: "👋 Hi! I'm your NOVA store AI assistant, powered by Google ADK + Llama 3.1.\n\nAsk me anything about your orders, customers, products, or revenue. Use the quick buttons below or type your own question.",
   }]);
   const [input, setInput]         = useState('');
   const [loading, setLoading]     = useState(false);
@@ -78,7 +78,7 @@ export default function AdminPage() {
               <Bot className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-2xl font-extrabold text-white uppercase tracking-widest">NOVA Admin</h1>
-            <p className="text-white/40 text-xs mt-1 uppercase tracking-wider">Google ADK · Llama 3.3 · Live Store Data</p>
+            <p className="text-white/40 text-xs mt-1 uppercase tracking-wider">Google ADK · Llama 3.1 · Live Store Data</p>
           </div>
           <form onSubmit={handleUnlock} className="space-y-4">
             <input
@@ -111,7 +111,7 @@ export default function AdminPage() {
         </div>
         <div>
           <h1 className="text-white font-extrabold text-sm uppercase tracking-widest">NOVA Admin Assistant</h1>
-          <p className="text-white/40 text-[10px] uppercase tracking-wider">Google ADK · Llama 3.3-70B · Live Data</p>
+          <p className="text-white/40 text-[10px] uppercase tracking-wider">Google ADK · Llama 3.1 · Live Data</p>
         </div>
         <div className="ml-auto flex items-center gap-4">
           <a href="/" className="text-white/40 hover:text-white text-xs transition-colors flex items-center gap-1.5">
@@ -190,7 +190,7 @@ export default function AdminPage() {
           </button>
         </div>
         <p className="text-center text-[10px] text-[#9CA3AF] mt-2 uppercase tracking-widest">
-          NOVA Admin · Google ADK + Llama 3.3 · Data fetched live on every query
+          NOVA Admin · Google ADK + Llama 3.1 · Data fetched live on every query
         </p>
       </div>
     </div>
