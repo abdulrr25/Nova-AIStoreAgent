@@ -18,7 +18,7 @@ const QUICK = [
 ];
 
 const ADMIN_PASS = process.env.NEXT_PUBLIC_ADMIN_PASS || 'nova@admin';
-const ADK_URL   = process.env.NEXT_PUBLIC_ADK_URL    || 'http://localhost:8001';
+const ADK_URL   = process.env.NEXT_PUBLIC_ADK_URL    || 'https://beautiful-upliftment-production-caa2.up.railway.app';
 
 export default function AdminPage() {
   const [unlocked, setUnlocked]   = useState(false);
