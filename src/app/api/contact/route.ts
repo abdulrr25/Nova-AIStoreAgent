@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const CONTACT_EMAIL = process.env.CONTACT_EMAIL || 'abdulr6503@gmail.com';
+
+function esc(s: string): string {
+  return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 export async function POST(request: Request) {
   try {
@@ -9,16 +14,16 @@ export async function POST(request: Request) {
 
     const { data, error } = await resend.emails.send({
       from: 'Contact Form <onboarding@resend.dev>',
-      to: ['abdulr6503@gmail.com'],
-      subject: `New Contact Form Submission: ${subject}`,
+      to: [CONTACT_EMAIL],
+      subject: `New Contact Form Submission: ${esc(subject)}`,
       html: `
         <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
+        <p><strong>Name:</strong> ${esc(name)}</p>
+        <p><strong>Email:</strong> ${esc(email)}</p>
+        <p><strong>Phone:</strong> ${esc(phone)}</p>
+        <p><strong>Subject:</strong> ${esc(subject)}</p>
         <p><strong>Message:</strong></p>
-        <p>${message}</p>
+        <p>${esc(message)}</p>
       `,
     });
 

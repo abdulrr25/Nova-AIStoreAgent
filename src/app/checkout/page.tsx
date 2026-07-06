@@ -83,6 +83,9 @@ export default function CheckoutPage() {
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    if (selectedMethod === 'UPI' && !upiId.trim()) { setError('Please enter your UPI ID.'); return; }
+    if (selectedMethod === 'NET_BANKING' && !selectedBank) { setError('Please select a bank.'); return; }
+    if (selectedMethod === 'WALLET' && !selectedWallet) { setError('Please select a wallet.'); return; }
     setProcessing(true);
     try {
       await new Promise(r => setTimeout(r, 1800));

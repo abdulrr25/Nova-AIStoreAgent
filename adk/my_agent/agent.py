@@ -1,6 +1,7 @@
 import os
 import requests
 from google.adk.agents import Agent
+from google.adk.models.lite_llm import LiteLlm
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -195,11 +196,11 @@ def get_low_stock_products(threshold: int = 10) -> dict:
         return {"status": "error", "message": str(e)}
 
 
-# ── Agent — uses Gemini 2.0 Flash (native Google ADK, perfect tool calling) ──
+# ── Agent — uses Groq Llama 3.3 70B via LiteLLM (needs GROQ_API_KEY env var) ──
 
 root_agent = Agent(
     name="nova_admin_agent",
-    model="gemini-2.0-flash",
+    model=LiteLlm(model="groq/llama-3.3-70b-versatile"),
     description="AI admin assistant for NOVA fashion e-commerce store.",
     instruction="""
 You are an intelligent admin assistant for NOVA, a fashion e-commerce store.

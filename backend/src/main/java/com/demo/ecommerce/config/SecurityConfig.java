@@ -59,16 +59,13 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        List<String> origins = new ArrayList<>(List.of(
-            "http://localhost:3000", "http://localhost:3001",
-            "http://localhost:5173", "http://localhost:5174"
+        List<String> patterns = new ArrayList<>(List.of(
+            "https://*.vercel.app", "http://localhost:*"
         ));
-        // Add production frontend URL if set (e.g. https://your-app.vercel.app)
         if (frontendUrl != null && !frontendUrl.isBlank()) {
-            origins.add(frontendUrl);
+            patterns.add(frontendUrl);
         }
-        // Allow all *.vercel.app preview deployments
-        config.setAllowedOriginPatterns(List.of("https://*.vercel.app", "http://localhost:*"));
+        config.setAllowedOriginPatterns(patterns);
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);

@@ -110,15 +110,24 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const addToCart = (product: Product, quantity = 1) =>
     setCart(prev => {
       const existing = prev.find(i => i.product.id === product.id);
-      return existing
-        ? prev.map(i => i.product.id === product.id ? { ...i, quantity: i.quantity + quantity } : i)
-        : [...prev, { product, quantity }];
+      if (existing) {
+        return prev.map(i =>
+          i.product.id === product.id
+            ? { ...i, quantity: Math.min(i.quantity + quantity, product.stock) }
+            : i
+        );
+      }
+      return [...prev, { product, quantity: Math.min(quantity, product.stock) }];
     });
 
   const removeFromCart = (productId: number) => setCart(prev => prev.filter(i => i.product.id !== productId));
   const updateQuantity = (productId: number, quantity: number) => {
     if (quantity < 1) { removeFromCart(productId); return; }
-    setCart(prev => prev.map(i => i.product.id === productId ? { ...i, quantity } : i));
+    setCart(prev => prev.map(i =>
+      i.product.id === productId
+        ? { ...i, quantity: Math.min(quantity, i.product.stock) }
+        : i
+    ));
   };
   const clearCart = () => { setCart([]); localStorage.removeItem('cart'); };
 
@@ -141,9 +150,11 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (cart.length === 0) throw new Error('Your cart is empty');
     try {
       const backendCart = await cartApi.get();
-      for (const item of backendCart.items) await cartApi.remove(item.id);
+      if (backendCart.items.length > 0) {
+        await Promise.all(backendCart.items.map(item => cartApi.remove(item.id)));
+      }
     } catch { }
-    for (const item of cart) await cartApi.add(item.product.id, item.quantity);
+    await Promise.all(cart.map(item => cartApi.add(item.product.id, item.quantity)));
     const order = await ordersApi.place(shippingAddress, paymentMethod, paymentDetails);
     const paid = await ordersApi.pay(order.id);
     clearCart();

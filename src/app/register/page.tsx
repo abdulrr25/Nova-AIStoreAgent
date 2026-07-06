@@ -50,7 +50,8 @@ function RegisterContent() {
   const { register, isAuthenticated, hydrated } = useShop();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirect = searchParams.get('redirect') || '/';
+  const rawRedirect = searchParams.get('redirect') || '/';
+  const redirect = rawRedirect.startsWith('/') && !rawRedirect.startsWith('//') ? rawRedirect : '/';
 
   const [name, setName]         = useState('');
   const [email, setEmail]       = useState('');

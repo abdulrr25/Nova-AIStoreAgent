@@ -28,11 +28,21 @@ export default function OrdersPage() {
   const router = useRouter();
   const [orders, setOrders] = useState<ApiOrder[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const fetchOrders = () => {
+    setLoading(true);
+    setError('');
+    ordersApi.getAll()
+      .then(setOrders)
+      .catch(() => setError('Failed to load orders. Please try again.'))
+      .finally(() => setLoading(false));
+  };
 
   useEffect(() => {
     if (!hydrated) return;
     if (!isAuthenticated) { router.replace('/login?redirect=/orders'); return; }
-    ordersApi.getAll().then(setOrders).catch(console.error).finally(() => setLoading(false));
+    fetchOrders();
   }, [hydrated, isAuthenticated]);
 
   if (!hydrated || loading) {
@@ -57,7 +67,18 @@ export default function OrdersPage() {
           </h1>
         </div>
 
-        {orders.length === 0 ? (
+        {error ? (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            className="bg-white border border-red-200 p-14 text-center rounded-sm shadow-sm">
+            <XCircle className="w-16 h-16 text-red-300 mx-auto mb-4" />
+            <h2 className="text-lg font-extrabold text-[#111111] uppercase tracking-wide mb-2">Something went wrong</h2>
+            <p className="text-[#6B7280] text-sm mb-6">{error}</p>
+            <button onClick={fetchOrders}
+              className="inline-flex items-center gap-2 px-8 py-3 bg-[#111111] text-white font-bold text-xs tracking-widest uppercase hover:bg-[#E84545] transition-colors rounded-sm">
+              TRY AGAIN
+            </button>
+          </motion.div>
+        ) : orders.length === 0 ? (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             className="bg-white border border-[#E5E7EB] p-14 text-center rounded-sm shadow-sm">
             <ShoppingBag className="w-16 h-16 text-[#E5E7EB] mx-auto mb-4" />

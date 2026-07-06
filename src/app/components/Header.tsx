@@ -142,7 +142,7 @@ export default function Header() {
                 <Heart className="w-5 h-5 text-white group-hover:text-[#E84545] transition-colors" />
                 {wishlist.length > 0 && (
                   <span className="absolute -top-1.5 -right-1.5 bg-[#E84545] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                    {wishlist.length}
+                    {wishlist.length > 99 ? '99+' : wishlist.length}
                   </span>
                 )}
               </div>
@@ -155,7 +155,7 @@ export default function Header() {
                 <ShoppingBag className="w-5 h-5 text-white group-hover:text-[#E84545] transition-colors" />
                 {cartCount > 0 && (
                   <span className="absolute -top-1.5 -right-1.5 bg-[#E84545] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                    {cartCount}
+                    {cartCount > 99 ? '99+' : cartCount}
                   </span>
                 )}
               </div>
