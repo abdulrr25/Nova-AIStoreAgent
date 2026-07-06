@@ -4,10 +4,14 @@ const config: Config = {
   theme: {
     extend: {
       container: { center: true, padding: "15px" },
+      fontFamily: {
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        serif: ["var(--font-serif)", "Georgia", "serif"],
+      },
       colors: {
-        accent: "#E84545",
+        accent: "#9C2B2B",
         nova: {
-          dark: "#0F0F0F",
+          dark: "#0C0A09",
           dark2: "#1A1A1A",
           body: "#F5F5F0",
           gray: "#6B7280",

@@ -27,12 +27,12 @@ const WALLETS = ['Paytm', 'PhonePe', 'Google Pay', 'Amazon Pay'];
 function InputField({ label, value, onChange, placeholder, type = 'text', required = true }: any) {
   return (
     <div>
-      <label className="block text-[10px] font-bold text-[#111111] mb-1.5 uppercase tracking-widest">{label}</label>
+      <label className="block text-[10px] font-bold text-[#14110F] mb-1.5 uppercase tracking-wide">{label}</label>
       <input
         type={type} required={required} value={value}
         onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full px-4 py-3 border border-[#E5E7EB] bg-white text-sm text-[#111111] placeholder:text-[#9CA3AF] outline-none focus:border-[#E84545] focus:ring-2 focus:ring-[#E84545]/10 transition-all rounded-sm"
+        className="w-full px-4 py-3 border border-[#E5E7EB] bg-white text-sm text-[#14110F] placeholder:text-[#9CA3AF] outline-none focus:border-[#9C2B2B] focus:ring-2 focus:ring-[#9C2B2B]/10 transition-all rounded-xl"
       />
     </div>
   );
@@ -62,7 +62,7 @@ export default function CheckoutPage() {
   if (!hydrated) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F5F5F0]">
-        <Loader2 className="w-10 h-10 animate-spin text-[#E84545]" />
+        <Loader2 className="w-10 h-10 animate-spin text-[#9C2B2B]" />
       </div>
     );
   }
@@ -99,7 +99,7 @@ export default function CheckoutPage() {
     }
   };
 
-  const inputCls = "w-full px-4 py-3 border border-[#E5E7EB] bg-white text-sm text-[#111111] placeholder:text-[#9CA3AF] outline-none focus:border-[#E84545] focus:ring-2 focus:ring-[#E84545]/10 transition-all rounded-sm";
+  const inputCls = "w-full px-4 py-3 border border-[#E5E7EB] bg-white text-sm text-[#14110F] placeholder:text-[#9CA3AF] outline-none focus:border-[#9C2B2B] focus:ring-2 focus:ring-[#9C2B2B]/10 transition-all rounded-xl";
 
   return (
     <div className="min-h-screen bg-[#F5F5F0]">
@@ -111,17 +111,17 @@ export default function CheckoutPage() {
           <div className="flex items-center justify-center gap-3 mb-10">
             {STEPS.slice(0, 2).map((s, i) => (
               <React.Fragment key={s}>
-                <div className={`flex items-center gap-2 text-sm font-medium transition-colors ${i <= step ? 'text-[#111111]' : 'text-[#9CA3AF]'}`}>
-                  <div className={`w-8 h-8 flex items-center justify-center text-xs font-bold border-2 transition-all rounded-sm ${
-                    i < step ? 'bg-[#111111] text-white border-[#111111]'
-                    : i === step ? 'border-[#E84545] text-[#E84545]'
+                <div className={`flex items-center gap-2 text-sm font-medium transition-colors ${i <= step ? 'text-[#14110F]' : 'text-[#9CA3AF]'}`}>
+                  <div className={`w-8 h-8 flex items-center justify-center text-xs font-bold border-2 transition-all rounded-xl ${
+                    i < step ? 'bg-[#14110F] text-white border-[#14110F]'
+                    : i === step ? 'border-[#9C2B2B] text-[#9C2B2B]'
                     : 'border-[#D1D5DB] text-[#9CA3AF]'
                   }`}>
                     {i < step ? '✓' : i + 1}
                   </div>
                   <span className="hidden sm:block text-xs font-bold tracking-wider uppercase">{s}</span>
                 </div>
-                {i < 1 && <div className={`w-16 h-0.5 transition-colors ${i < step ? 'bg-[#111111]' : 'bg-[#E5E7EB]'}`} />}
+                {i < 1 && <div className={`w-16 h-0.5 transition-colors ${i < step ? 'bg-[#14110F]' : 'bg-[#E5E7EB]'}`} />}
               </React.Fragment>
             ))}
           </div>
@@ -134,13 +134,13 @@ export default function CheckoutPage() {
               {/* ── Step 0: Address ── */}
               {step === 0 && (
                 <motion.div key="addr" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
-                  className="bg-white border border-[#E5E7EB] p-7 rounded-sm shadow-sm">
+                  className="bg-white border border-[#E5E7EB] p-7 rounded-xl shadow-sm">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-[#111111] flex items-center justify-center rounded-sm">
+                    <div className="w-10 h-10 bg-[#14110F] flex items-center justify-center rounded-xl">
                       <MapPin className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <h2 className="text-base font-extrabold text-[#111111] uppercase tracking-wide">Delivery Address</h2>
+                      <h2 className="text-base font-semibold text-[#14110F] ">Delivery Address</h2>
                       <p className="text-xs text-[#6B7280]">Where should we deliver your order?</p>
                     </div>
                   </div>
@@ -155,8 +155,8 @@ export default function CheckoutPage() {
                       <InputField label="Phone" value={address.phone} onChange={(v: string) => setAddress(a => ({ ...a, phone: v }))} placeholder="+91 98765 43210" />
                     </div>
                     <button type="submit"
-                      className="w-full py-4 bg-[#111111] text-white text-xs font-extrabold tracking-widest uppercase hover:bg-[#E84545] transition-colors rounded-sm mt-2">
-                      CONTINUE TO PAYMENT
+                      className="w-full py-4 bg-[#14110F] text-white text-sm font-medium hover:bg-[#9C2B2B] transition-colors rounded-full mt-2">
+                      Continue to Payment
                     </button>
                   </form>
                 </motion.div>
@@ -165,20 +165,20 @@ export default function CheckoutPage() {
               {/* ── Step 1: Payment ── */}
               {step === 1 && (
                 <motion.div key="pay" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
-                  className="bg-white border border-[#E5E7EB] p-7 rounded-sm shadow-sm">
+                  className="bg-white border border-[#E5E7EB] p-7 rounded-xl shadow-sm">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-[#111111] flex items-center justify-center rounded-sm">
+                    <div className="w-10 h-10 bg-[#14110F] flex items-center justify-center rounded-xl">
                       <CreditCard className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <h2 className="text-base font-extrabold text-[#111111] uppercase tracking-wide">Payment</h2>
+                      <h2 className="text-base font-semibold text-[#14110F]">Payment</h2>
                       <p className="text-xs text-[#6B7280]">Choose your preferred payment method</p>
                     </div>
                   </div>
 
-                  <div className="mb-5 p-3.5 bg-[#F9FAFB] border border-[#E5E7EB] flex items-start gap-2.5 rounded-sm">
+                  <div className="mb-5 p-3.5 bg-[#F9FAFB] border border-[#E5E7EB] flex items-start gap-2.5 rounded-xl">
                     <ShieldCheck className="w-4 h-4 text-[#16A34A] flex-shrink-0 mt-0.5" />
-                    <p className="text-xs text-[#6B7280]"><span className="font-semibold text-[#111111]">Demo mode</span> — no real payments processed. Safe for testing.</p>
+                    <p className="text-xs text-[#6B7280]"><span className="font-semibold text-[#14110F]">Demo mode</span> — no real payments processed. Safe for testing.</p>
                   </div>
 
                   {/* Payment Method Selector */}
@@ -188,10 +188,10 @@ export default function CheckoutPage() {
                         key={method.id}
                         type="button"
                         onClick={() => setSelectedMethod(method.id)}
-                        className={`flex items-center gap-2 px-3 py-3 text-xs font-bold border-2 transition-all rounded-sm text-left ${
+                        className={`flex items-center gap-2 px-3 py-3 text-xs font-bold border-2 transition-all rounded-xl text-left ${
                           selectedMethod === method.id
-                            ? 'border-[#E84545] bg-[#FFF0F0] text-[#E84545]'
-                            : 'border-[#E5E7EB] text-[#111111] hover:border-[#D1D5DB]'
+                            ? 'border-[#9C2B2B] bg-[#F5E9E7] text-[#9C2B2B]'
+                            : 'border-[#E5E7EB] text-[#14110F] hover:border-[#D1D5DB]'
                         }`}>
                         <span className="text-base">{method.icon}</span>
                         <span className="tracking-wide">{method.label}</span>
@@ -201,7 +201,7 @@ export default function CheckoutPage() {
 
                   {error && (
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                      className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-sm">
+                      className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl">
                       {error}
                     </motion.div>
                   )}
@@ -210,7 +210,7 @@ export default function CheckoutPage() {
                     {/* UPI */}
                     {selectedMethod === 'UPI' && (
                       <div>
-                        <label className="block text-[10px] font-bold text-[#111111] mb-1.5 uppercase tracking-widest">Enter UPI ID</label>
+                        <label className="block text-[10px] font-bold text-[#14110F] mb-1.5 uppercase tracking-wide">Enter UPI ID</label>
                         <input
                           value={upiId}
                           onChange={e => setUpiId(e.target.value)}
@@ -225,11 +225,11 @@ export default function CheckoutPage() {
                     {selectedMethod === 'CARD' && (
                       <div className="space-y-3">
                         <div>
-                          <label className="block text-[10px] font-bold text-[#111111] mb-1.5 uppercase tracking-widest">Cardholder Name</label>
+                          <label className="block text-[10px] font-bold text-[#14110F] mb-1.5 uppercase tracking-wide">Cardholder Name</label>
                           <input value={card.name} onChange={e => setCard(c => ({ ...c, name: e.target.value }))} className={inputCls} />
                         </div>
                         <div>
-                          <label className="block text-[10px] font-bold text-[#111111] mb-1.5 uppercase tracking-widest">Card Number</label>
+                          <label className="block text-[10px] font-bold text-[#14110F] mb-1.5 uppercase tracking-wide">Card Number</label>
                           <div className="relative">
                             <input value={card.number} onChange={e => setCard(c => ({ ...c, number: e.target.value }))}
                               className={`${inputCls} font-mono pr-10`} />
@@ -238,11 +238,11 @@ export default function CheckoutPage() {
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-[10px] font-bold text-[#111111] mb-1.5 uppercase tracking-widest">Expiry</label>
+                            <label className="block text-[10px] font-bold text-[#14110F] mb-1.5 uppercase tracking-wide">Expiry</label>
                             <input value={card.expiry} onChange={e => setCard(c => ({ ...c, expiry: e.target.value }))} className={`${inputCls} font-mono`} placeholder="MM/YY" />
                           </div>
                           <div>
-                            <label className="block text-[10px] font-bold text-[#111111] mb-1.5 uppercase tracking-widest">CVV</label>
+                            <label className="block text-[10px] font-bold text-[#14110F] mb-1.5 uppercase tracking-wide">CVV</label>
                             <input type="password" value={card.cvv} onChange={e => setCard(c => ({ ...c, cvv: e.target.value }))} className={`${inputCls} font-mono`} placeholder="•••" />
                           </div>
                         </div>
@@ -252,7 +252,7 @@ export default function CheckoutPage() {
                     {/* Net Banking */}
                     {selectedMethod === 'NET_BANKING' && (
                       <div>
-                        <label className="block text-[10px] font-bold text-[#111111] mb-1.5 uppercase tracking-widest">Select Bank</label>
+                        <label className="block text-[10px] font-bold text-[#14110F] mb-1.5 uppercase tracking-wide">Select Bank</label>
                         <select
                           value={selectedBank}
                           onChange={e => setSelectedBank(e.target.value)}
@@ -267,9 +267,9 @@ export default function CheckoutPage() {
 
                     {/* COD */}
                     {selectedMethod === 'COD' && (
-                      <div className="p-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-sm">
-                        <p className="text-sm text-[#111111] font-medium">
-                          Pay <span className="font-extrabold">{formatPrice(cartTotal)}</span> on delivery.
+                      <div className="p-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl">
+                        <p className="text-sm text-[#14110F] font-medium">
+                          Pay <span className="font-semibold">{formatPrice(cartTotal)}</span> on delivery.
                         </p>
                         <p className="text-xs text-[#6B7280] mt-1">No prepayment needed. Cash/card accepted on delivery.</p>
                       </div>
@@ -278,14 +278,14 @@ export default function CheckoutPage() {
                     {/* Wallet */}
                     {selectedMethod === 'WALLET' && (
                       <div>
-                        <label className="block text-[10px] font-bold text-[#111111] mb-2 uppercase tracking-widest">Select Wallet</label>
+                        <label className="block text-[10px] font-bold text-[#14110F] mb-2 uppercase tracking-wide">Select Wallet</label>
                         <div className="grid grid-cols-2 gap-2">
                           {WALLETS.map(wallet => (
                             <button key={wallet} type="button" onClick={() => setSelectedWallet(wallet)}
-                              className={`py-2.5 px-3 text-xs font-bold border-2 transition-all rounded-sm ${
+                              className={`py-2.5 px-3 text-xs font-bold border-2 transition-all rounded-xl ${
                                 selectedWallet === wallet
-                                  ? 'border-[#E84545] bg-[#FFF0F0] text-[#E84545]'
-                                  : 'border-[#E5E7EB] text-[#111111] hover:border-[#D1D5DB]'
+                                  ? 'border-[#9C2B2B] bg-[#F5E9E7] text-[#9C2B2B]'
+                                  : 'border-[#E5E7EB] text-[#14110F] hover:border-[#D1D5DB]'
                               }`}>
                               {wallet}
                             </button>
@@ -296,14 +296,14 @@ export default function CheckoutPage() {
 
                     <div className="flex gap-3 pt-2">
                       <button type="button" onClick={() => setStep(0)}
-                        className="flex items-center gap-2 px-5 py-3.5 border-2 border-[#E5E7EB] text-[#111111] hover:border-[#111111] transition-colors text-xs font-bold tracking-wide uppercase rounded-sm">
+                        className="flex items-center gap-2 px-5 py-3.5 border border-[#E5E7EB] text-[#14110F] hover:border-[#14110F] transition-colors text-sm font-medium rounded-full">
                         <ArrowLeft className="w-4 h-4" /> Back
                       </button>
                       <button type="submit" disabled={processing}
-                        className="flex-1 py-3.5 bg-[#111111] text-white font-extrabold text-xs tracking-widest uppercase hover:bg-[#E84545] transition-colors disabled:opacity-60 flex items-center justify-center gap-2 rounded-sm">
+                        className="flex-1 py-3.5 bg-[#14110F] text-white font-medium text-sm hover:bg-[#9C2B2B] transition-colors disabled:opacity-60 flex items-center justify-center gap-2 rounded-full">
                         {processing
-                          ? <><Loader2 className="w-4 h-4 animate-spin" /> PROCESSING...</>
-                          : `PAY ${formatPrice(cartTotal)}`}
+                          ? <><Loader2 className="w-4 h-4 animate-spin" /> Processing...</>
+                          : `Pay ${formatPrice(cartTotal)}`}
                       </button>
                     </div>
                   </form>
@@ -313,15 +313,15 @@ export default function CheckoutPage() {
               {/* ── Step 2: Confirmed ── */}
               {step === 2 && (
                 <motion.div key="done" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-                  className="bg-white border border-[#E5E7EB] p-12 text-center rounded-sm shadow-sm">
+                  className="bg-white border border-[#E5E7EB] p-12 text-center rounded-xl shadow-sm">
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', delay: 0.2 }}
-                    className="w-20 h-20 bg-[#F0FDF4] border-2 border-[#16A34A] flex items-center justify-center mx-auto mb-6 rounded-sm">
+                    className="w-20 h-20 bg-[#F0FDF4] border-2 border-[#16A34A] flex items-center justify-center mx-auto mb-6 rounded-xl">
                     <CheckCircle className="w-10 h-10 text-[#16A34A]" />
                   </motion.div>
-                  <h2 className="text-2xl font-extrabold text-[#111111] uppercase tracking-wide mb-2">Order Placed!</h2>
+                  <h2 className="text-2xl font-semibold text-[#14110F] mb-2">Order Placed!</h2>
                   <p className="text-[#6B7280] mb-1 text-sm">
                     Order{' '}
-                    <span className="font-bold text-[#111111]">
+                    <span className="font-bold text-[#14110F]">
                       {confirmedOrder?.orderCode ? confirmedOrder.orderCode : `#${confirmedOrder?.id}`}
                     </span>
                     {' '}confirmed.
@@ -330,12 +330,12 @@ export default function CheckoutPage() {
                   <p className="text-[#9CA3AF] text-xs mb-8">You'll receive a confirmation email shortly.</p>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <Link href={`/orders/${confirmedOrder?.id}`}
-                      className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#111111] text-white font-bold text-xs tracking-widest uppercase hover:bg-[#E84545] transition-colors rounded-sm">
-                      <Package className="w-4 h-4" /> TRACK ORDER
+                      className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#14110F] text-white font-medium text-sm hover:bg-[#9C2B2B] transition-colors rounded-full">
+                      <Package className="w-4 h-4" /> Track Order
                     </Link>
                     <Link href="/shop"
-                      className="inline-flex items-center gap-2 px-8 py-3.5 border-2 border-[#E5E7EB] text-[#111111] font-bold text-xs tracking-widest uppercase hover:border-[#111111] transition-colors rounded-sm">
-                      CONTINUE SHOPPING
+                      className="inline-flex items-center gap-2 px-8 py-3.5 border border-[#E5E7EB] text-[#14110F] font-medium text-sm hover:border-[#14110F] transition-colors rounded-full">
+                      Continue Shopping
                     </Link>
                   </div>
                 </motion.div>
@@ -346,32 +346,32 @@ export default function CheckoutPage() {
           {/* Order Summary */}
           {step < 2 && (
             <div>
-              <div className="bg-white border border-[#E5E7EB] p-5 sticky top-28 rounded-sm shadow-sm">
-                <h3 className="font-extrabold text-[#111111] text-xs tracking-widest uppercase mb-4 pb-3 border-b border-[#E5E7EB]">
+              <div className="bg-white border border-[#E5E7EB] p-5 sticky top-28 rounded-xl shadow-sm">
+                <h3 className="font-semibold text-[#14110F] text-xs tracking-wide uppercase mb-4 pb-3 border-b border-[#E5E7EB]">
                   Order Summary
                 </h3>
                 <div className="space-y-3 max-h-56 overflow-y-auto mb-4">
                   {cart.map(item => (
                     <div key={item.product.id} className="flex items-center gap-3">
-                      <div className="relative w-12 h-14 flex-shrink-0 overflow-hidden bg-[#F9FAFB] rounded-sm">
+                      <div className="relative w-12 h-14 flex-shrink-0 overflow-hidden bg-[#F9FAFB] rounded-xl">
                         <Image src={item.product.imageUrl} alt={item.product.name} fill className="object-cover" unoptimized />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs font-medium text-[#111111] line-clamp-1">{item.product.name}</p>
+                        <p className="text-xs font-medium text-[#14110F] line-clamp-1">{item.product.name}</p>
                         <p className="text-[10px] text-[#6B7280]">Qty {item.quantity}</p>
                       </div>
-                      <span className="text-xs font-bold flex-shrink-0 text-[#111111]">{formatPrice(item.product.price * item.quantity)}</span>
+                      <span className="text-xs font-bold flex-shrink-0 text-[#14110F]">{formatPrice(item.product.price * item.quantity)}</span>
                     </div>
                   ))}
                 </div>
                 <div className="border-t border-[#E5E7EB] pt-4 space-y-2 text-xs">
                   <div className="flex justify-between text-[#6B7280]">
-                    <span>Subtotal</span><span className="font-medium text-[#111111]">{formatPrice(cartTotal)}</span>
+                    <span>Subtotal</span><span className="font-medium text-[#14110F]">{formatPrice(cartTotal)}</span>
                   </div>
                   <div className="flex justify-between text-[#6B7280]">
                     <span>Shipping</span><span className="text-[#16A34A] font-bold">FREE</span>
                   </div>
-                  <div className="flex justify-between font-extrabold text-[#111111] text-base pt-2 border-t border-[#E5E7EB] mt-1">
+                  <div className="flex justify-between font-semibold text-[#14110F] text-base pt-2 border-t border-[#E5E7EB] mt-1">
                     <span>Total</span><span>{formatPrice(cartTotal)}</span>
                   </div>
                 </div>

@@ -20,7 +20,7 @@ export default function WishlistPage() {
       <div className="min-h-screen bg-[#F5F5F0]">
         <Header />
         <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="w-8 h-8 border-2 border-[#E84545] border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-[#9C2B2B] border-t-transparent rounded-full animate-spin" />
         </div>
       </div>
     );
@@ -31,18 +31,18 @@ export default function WishlistPage() {
       <div className="min-h-screen bg-[#F5F5F0]">
         <Header />
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-          <div className="w-20 h-20 bg-[#FFF0F0] rounded-full flex items-center justify-center mb-6">
-            <Heart className="w-9 h-9 text-[#E84545]" />
+          <div className="w-20 h-20 bg-[#F5E9E7] rounded-full flex items-center justify-center mb-6">
+            <Heart className="w-9 h-9 text-[#9C2B2B]" />
           </div>
-          <h2 className="text-xl font-extrabold text-[#111111] uppercase tracking-wide mb-2">Login to View Wishlist</h2>
+          <h2 className="text-xl font-semibold text-[#14110F] uppercase tracking-wide mb-2">Login to View Wishlist</h2>
           <p className="text-[#6B7280] text-sm mb-6 max-w-xs">Sign in to save your favourite items and access your wishlist anytime.</p>
           <div className="flex gap-3">
             <Link href="/login?redirect=/wishlist"
-              className="bg-[#111111] text-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-[#E84545] transition-colors rounded-sm">
+              className="bg-[#14110F] text-white px-8 py-3 text-xs font-bold tracking-wide uppercase hover:bg-[#9C2B2B] transition-colors rounded-xl">
               SIGN IN
             </Link>
             <Link href="/register"
-              className="border-2 border-[#111111] text-[#111111] px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-[#111111] hover:text-white transition-colors rounded-sm">
+              className="border-2 border-[#14110F] text-[#14110F] px-8 py-3 text-xs font-bold tracking-wide uppercase hover:bg-[#14110F] hover:text-white transition-colors rounded-xl">
               CREATE ACCOUNT
             </Link>
           </div>
@@ -58,8 +58,8 @@ export default function WishlistPage() {
         {/* Page title */}
         <div className="flex items-end justify-between mb-8">
           <div>
-            <p className="text-[#E84545] text-[10px] font-bold tracking-widest uppercase mb-1">Saved Items</p>
-            <h1 className="text-2xl font-extrabold text-[#111111] uppercase tracking-wide flex items-center gap-2">
+            <p className="text-[#9C2B2B] text-[10px] font-bold tracking-wide uppercase mb-1">Saved Items</p>
+            <h1 className="text-2xl font-semibold text-[#14110F] uppercase tracking-wide flex items-center gap-2">
               MY WISHLIST
               <span className="text-sm font-medium text-[#6B7280] normal-case tracking-normal">
                 ({wishlistProducts.length} item{wishlistProducts.length !== 1 ? 's' : ''})
@@ -71,7 +71,7 @@ export default function WishlistPage() {
               onClick={() => {
                 wishlistProducts.forEach(p => { if (p.stock > 0) addToCart(p, 1); });
               }}
-              className="flex items-center gap-2 border-2 border-[#111111] text-[#111111] px-5 py-2.5 text-[10px] font-bold tracking-widest uppercase hover:bg-[#111111] hover:text-white transition-colors rounded-sm">
+              className="flex items-center gap-2 border-2 border-[#14110F] text-[#14110F] px-5 py-2.5 text-[10px] font-bold tracking-wide uppercase hover:bg-[#14110F] hover:text-white transition-colors rounded-xl">
               <ShoppingBag className="w-4 h-4" /> MOVE ALL TO BAG
             </button>
           )}
@@ -84,12 +84,12 @@ export default function WishlistPage() {
             <div className="w-24 h-24 bg-white border border-[#E5E7EB] rounded-full flex items-center justify-center mb-6 shadow-sm">
               <Heart className="w-10 h-10 text-[#D1D5DB]" />
             </div>
-            <h2 className="text-xl font-extrabold text-[#111111] uppercase tracking-wide mb-2">Your Wishlist is Empty</h2>
+            <h2 className="text-xl font-semibold text-[#14110F] uppercase tracking-wide mb-2">Your Wishlist is Empty</h2>
             <p className="text-[#6B7280] text-sm mb-8 max-w-sm">
               Save items you love by tapping the heart icon on any product.
             </p>
             <Link href="/shop"
-              className="bg-[#111111] text-white px-10 py-3.5 text-xs font-bold tracking-widest uppercase hover:bg-[#E84545] transition-colors rounded-sm flex items-center gap-2">
+              className="bg-[#14110F] text-white px-10 py-3.5 text-xs font-bold tracking-wide uppercase hover:bg-[#9C2B2B] transition-colors rounded-xl flex items-center gap-2">
               <ShoppingBag className="w-4 h-4" /> SHOP NOW
             </Link>
           </motion.div>

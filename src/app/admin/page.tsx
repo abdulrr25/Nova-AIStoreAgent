@@ -71,13 +71,13 @@ export default function AdminPage() {
   /* ── Lock screen ── */
   if (!unlocked) {
     return (
-      <div className="min-h-screen bg-[#0F0F0F] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#0C0A09] flex items-center justify-center p-4">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-[#E84545] flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-[#9C2B2B] flex items-center justify-center mx-auto mb-4">
               <Bot className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-2xl font-extrabold text-white uppercase tracking-widest">NOVA Admin</h1>
+            <h1 className="text-2xl font-semibold text-white uppercase tracking-wide">NOVA Admin</h1>
             <p className="text-white/40 text-xs mt-1 uppercase tracking-wider">Google ADK · Llama 3.3 · Live Store Data</p>
           </div>
           <form onSubmit={handleUnlock} className="space-y-4">
@@ -87,11 +87,11 @@ export default function AdminPage() {
               onChange={e => setPassInput(e.target.value)}
               placeholder="Enter admin password"
               autoFocus
-              className={`w-full px-4 py-3.5 bg-[#1A1A1A] border text-white text-sm placeholder:text-white/30 outline-none transition-all ${passError ? 'border-[#E84545]' : 'border-[#2A2A2A] focus:border-[#E84545]'}`}
+              className={`w-full px-4 py-3.5 bg-[#1A1A1A] border text-white text-sm placeholder:text-white/30 outline-none transition-all ${passError ? 'border-[#9C2B2B]' : 'border-[#2A2A2A] focus:border-[#9C2B2B]'}`}
             />
-            {passError && <p className="text-[#E84545] text-xs text-center">Incorrect password</p>}
+            {passError && <p className="text-[#9C2B2B] text-xs text-center">Incorrect password</p>}
             <button type="submit"
-              className="w-full py-3.5 bg-[#E84545] text-white font-extrabold text-xs tracking-widest uppercase hover:bg-[#cc3333] transition-colors">
+              className="w-full py-3.5 bg-[#9C2B2B] text-white font-semibold text-xs tracking-wide uppercase hover:bg-[#7a1f1f] transition-colors">
               ENTER
             </button>
           </form>
@@ -105,12 +105,12 @@ export default function AdminPage() {
     <div className="min-h-screen bg-[#F5F5F0] flex flex-col">
 
       {/* Header */}
-      <div className="bg-[#0F0F0F] px-6 py-4 flex items-center gap-3 shrink-0">
-        <div className="w-9 h-9 bg-[#E84545] flex items-center justify-center shrink-0">
+      <div className="bg-[#0C0A09] px-6 py-4 flex items-center gap-3 shrink-0">
+        <div className="w-9 h-9 bg-[#9C2B2B] flex items-center justify-center shrink-0">
           <Bot className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h1 className="text-white font-extrabold text-sm uppercase tracking-widest">NOVA Admin Assistant</h1>
+          <h1 className="text-white font-semibold text-sm uppercase tracking-wide">NOVA Admin Assistant</h1>
           <p className="text-white/40 text-[10px] uppercase tracking-wider">Google ADK · Llama 3.3 · Live Data</p>
         </div>
         <div className="ml-auto flex items-center gap-4">
@@ -122,11 +122,11 @@ export default function AdminPage() {
 
       {/* Quick action bar */}
       <div className="bg-white border-b border-[#E5E7EB] px-4 py-3 flex items-center gap-3 overflow-x-auto shrink-0">
-        <Zap className="w-3.5 h-3.5 text-[#E84545] shrink-0" />
-        <span className="text-[10px] text-[#9CA3AF] uppercase tracking-widest shrink-0">Quick:</span>
+        <Zap className="w-3.5 h-3.5 text-[#9C2B2B] shrink-0" />
+        <span className="text-[10px] text-[#9CA3AF] uppercase tracking-wide shrink-0">Quick:</span>
         {QUICK.map(({ label, q }) => (
           <button key={label} onClick={() => send(q)} disabled={loading}
-            className="text-xs px-3 py-1.5 bg-[#F5F5F0] border border-[#E5E7EB] text-[#374151] hover:bg-[#E84545] hover:text-white hover:border-[#E84545] transition-colors whitespace-nowrap disabled:opacity-40">
+            className="text-xs px-3 py-1.5 bg-[#F5F5F0] border border-[#E5E7EB] text-[#374151] hover:bg-[#9C2B2B] hover:text-white hover:border-[#9C2B2B] transition-colors whitespace-nowrap disabled:opacity-40">
             {label}
           </button>
         ))}
@@ -137,19 +137,19 @@ export default function AdminPage() {
         {messages.map((msg, i) => (
           <div key={i} className={`flex gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             {msg.role === 'assistant' && (
-              <div className="w-8 h-8 bg-[#E84545] flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-8 h-8 bg-[#9C2B2B] flex items-center justify-center shrink-0 mt-0.5">
                 <Bot className="w-4 h-4 text-white" />
               </div>
             )}
             <div className={`max-w-[80%] px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
               msg.role === 'user'
-                ? 'bg-[#111111] text-white'
-                : 'bg-white border border-[#E5E7EB] text-[#111111] shadow-sm'
+                ? 'bg-[#14110F] text-white'
+                : 'bg-white border border-[#E5E7EB] text-[#14110F] shadow-sm'
             }`}>
               {msg.content}
             </div>
             {msg.role === 'user' && (
-              <div className="w-8 h-8 bg-[#111111] flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-8 h-8 bg-[#14110F] flex items-center justify-center shrink-0 mt-0.5">
                 <User className="w-4 h-4 text-white" />
               </div>
             )}
@@ -158,11 +158,11 @@ export default function AdminPage() {
 
         {loading && (
           <div className="flex gap-3">
-            <div className="w-8 h-8 bg-[#E84545] flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 bg-[#9C2B2B] flex items-center justify-center shrink-0">
               <Bot className="w-4 h-4 text-white" />
             </div>
             <div className="bg-white border border-[#E5E7EB] px-4 py-3 shadow-sm flex items-center gap-2">
-              <Loader2 className="w-4 h-4 animate-spin text-[#E84545]" />
+              <Loader2 className="w-4 h-4 animate-spin text-[#9C2B2B]" />
               <span className="text-sm text-[#9CA3AF]">Querying your store data...</span>
             </div>
           </div>
@@ -181,15 +181,15 @@ export default function AdminPage() {
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send(input)}
               placeholder='Ask anything — "Orders by Abdul", "ORD-202505-000001 status", "Revenue today"...'
-              className="w-full pl-10 pr-4 py-3 border border-[#E5E7EB] text-sm text-[#111111] placeholder:text-[#9CA3AF] outline-none focus:border-[#E84545] focus:ring-2 focus:ring-[#E84545]/10 transition-all"
+              className="w-full pl-10 pr-4 py-3 border border-[#E5E7EB] text-sm text-[#14110F] placeholder:text-[#9CA3AF] outline-none focus:border-[#9C2B2B] focus:ring-2 focus:ring-[#9C2B2B]/10 transition-all"
             />
           </div>
           <button onClick={() => send(input)} disabled={loading || !input.trim()}
-            className="px-5 py-3 bg-[#E84545] text-white hover:bg-[#cc3333] transition-colors disabled:opacity-40">
+            className="px-5 py-3 bg-[#9C2B2B] text-white hover:bg-[#7a1f1f] transition-colors disabled:opacity-40">
             <Send className="w-4 h-4" />
           </button>
         </div>
-        <p className="text-center text-[10px] text-[#9CA3AF] mt-2 uppercase tracking-widest">
+        <p className="text-center text-[10px] text-[#9CA3AF] mt-2 uppercase tracking-wide">
           NOVA Admin · Google ADK + Llama 3.3 · Data fetched live on every query
         </p>
       </div>

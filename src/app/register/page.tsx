@@ -16,7 +16,7 @@ function PasswordStrength({ password }: { password: string }) {
   ];
   if (!password) return null;
   const strength = checks.filter(c => c.pass).length;
-  const colors = ['bg-[#E84545]', 'bg-yellow-400', 'bg-[#16A34A]'];
+  const colors = ['bg-[#9C2B2B]', 'bg-yellow-400', 'bg-[#16A34A]'];
   const labels = ['Weak', 'Fair', 'Strong'];
   return (
     <div className="mt-2">
@@ -28,7 +28,7 @@ function PasswordStrength({ password }: { password: string }) {
       <div className="space-y-1">
         {checks.map(c => (
           <div key={c.label} className={`flex items-center gap-1.5 text-xs transition-colors ${c.pass ? 'text-[#16A34A]' : 'text-[#9CA3AF]'}`}>
-            <div className={`w-3.5 h-3.5 flex items-center justify-center flex-shrink-0 rounded-sm ${c.pass ? 'bg-[#16A34A]' : 'bg-[#E5E7EB]'}`}>
+            <div className={`w-3.5 h-3.5 flex items-center justify-center flex-shrink-0 rounded-xl ${c.pass ? 'bg-[#16A34A]' : 'bg-[#E5E7EB]'}`}>
               {c.pass && <Check className="w-2 h-2 text-white" strokeWidth={3} />}
             </div>
             {c.label}
@@ -84,28 +84,28 @@ function RegisterContent() {
     }
   };
 
-  const inputCls = "w-full px-4 py-3.5 border border-[#E5E7EB] bg-white text-sm text-[#111111] placeholder:text-[#9CA3AF] outline-none focus:border-[#E84545] focus:ring-2 focus:ring-[#E84545]/10 transition-all";
+  const inputCls = "w-full px-4 py-3.5 border border-[#E5E7EB] bg-white text-sm text-[#14110F] placeholder:text-[#9CA3AF] outline-none focus:border-[#9C2B2B] focus:ring-2 focus:ring-[#9C2B2B]/10 transition-all";
 
   return (
     <div className="min-h-screen flex">
 
       {/* ── LEFT PANEL: dark brand side ── */}
-      <div className="hidden lg:flex lg:w-[45%] relative overflow-hidden flex-col bg-[#0F0F0F]">
-        <div className="absolute top-0 left-0 w-72 h-72 bg-[#E84545]/5 rounded-full -translate-y-1/2 -translate-x-1/2" />
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#E84545]/5 rounded-full translate-y-1/2 translate-x-1/2" />
-        <div className="absolute top-1/2 left-12 w-2 h-24 bg-[#E84545]/40" />
+      <div className="hidden lg:flex lg:w-[45%] relative overflow-hidden flex-col bg-[#0C0A09]">
+        <div className="absolute top-0 left-0 w-72 h-72 bg-[#9C2B2B]/5 rounded-full -translate-y-1/2 -translate-x-1/2" />
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#9C2B2B]/5 rounded-full translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-1/2 left-12 w-2 h-24 bg-[#9C2B2B]/40" />
 
         <div className="relative z-10 flex flex-col h-full px-14 py-12">
           {/* Logo */}
           <Link href="/">
-            <span className="text-3xl font-extrabold italic text-white tracking-tight">NOVA</span>
+            <span className="text-3xl font-semibold italic text-white tracking-tight">NOVA</span>
           </Link>
 
           {/* Main copy */}
           <div className="flex-1 flex flex-col justify-center">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <p className="text-[#E84545] text-[10px] font-extrabold tracking-widest uppercase mb-4">Join Today</p>
-              <h2 className="text-4xl font-extrabold text-white leading-tight mb-5 uppercase tracking-tight">
+              <p className="text-[#9C2B2B] text-[10px] font-semibold tracking-wide uppercase mb-4">Join Today</p>
+              <h2 className="text-4xl font-semibold text-white leading-tight mb-5 uppercase tracking-tight">
                 Your Fashion<br />Journey<br />Starts Here.
               </h2>
               <p className="text-white/50 text-sm leading-relaxed mb-10 max-w-xs">
@@ -119,7 +119,7 @@ function RegisterContent() {
                     transition={{ delay: 0.3 + i * 0.1 }}
                     className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-[#1A1A1A] border border-[#2A2A2A] flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-4 h-4 text-[#E84545]" />
+                      <Icon className="w-4 h-4 text-[#9C2B2B]" />
                     </div>
                     <span className="text-white/70 text-sm">{text}</span>
                   </motion.div>
@@ -130,7 +130,7 @@ function RegisterContent() {
 
           {/* Bottom note */}
           <div className="border-t border-white/10 pt-6">
-            <p className="text-white/30 text-xs uppercase tracking-widest">Free to join · No hidden fees · Cancel anytime</p>
+            <p className="text-white/30 text-xs uppercase tracking-wide">Free to join · No hidden fees · Cancel anytime</p>
           </div>
         </div>
       </div>
@@ -140,7 +140,7 @@ function RegisterContent() {
         {/* Mobile logo */}
         <div className="lg:hidden flex items-center justify-between p-5 border-b border-[#E5E7EB]">
           <Link href="/">
-            <span className="text-xl font-extrabold italic text-[#111111]">NOVA</span>
+            <span className="text-xl font-semibold italic text-[#14110F]">NOVA</span>
           </Link>
         </div>
 
@@ -149,11 +149,11 @@ function RegisterContent() {
             className="w-full max-w-[400px]">
 
             <div className="mb-7">
-              <h1 className="text-2xl font-extrabold text-[#111111] uppercase tracking-wide">Create Account</h1>
+              <h1 className="text-2xl font-semibold text-[#14110F] uppercase tracking-wide">Create Account</h1>
               <p className="text-[#6B7280] text-sm mt-1.5">
                 Already have an account?{' '}
                 <Link href={`/login${redirect !== '/' ? `?redirect=${redirect}` : ''}`}
-                  className="text-[#E84545] font-bold hover:underline">
+                  className="text-[#9C2B2B] font-bold hover:underline">
                   Sign in
                 </Link>
               </p>
@@ -162,7 +162,7 @@ function RegisterContent() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Name */}
               <div>
-                <label className="block text-[10px] font-extrabold text-[#111111] mb-1.5 uppercase tracking-widest">Full Name</label>
+                <label className="block text-[10px] font-semibold text-[#14110F] mb-1.5 uppercase tracking-wide">Full Name</label>
                 <input type="text" required value={name} onChange={e => setName(e.target.value)}
                   placeholder="Your full name"
                   className={inputCls} />
@@ -170,7 +170,7 @@ function RegisterContent() {
 
               {/* Email */}
               <div>
-                <label className="block text-[10px] font-extrabold text-[#111111] mb-1.5 uppercase tracking-widest">Email Address</label>
+                <label className="block text-[10px] font-semibold text-[#14110F] mb-1.5 uppercase tracking-wide">Email Address</label>
                 <input type="email" required value={email} onChange={e => setEmail(e.target.value)}
                   placeholder="your@email.com"
                   className={inputCls} />
@@ -178,13 +178,13 @@ function RegisterContent() {
 
               {/* Password */}
               <div>
-                <label className="block text-[10px] font-extrabold text-[#111111] mb-1.5 uppercase tracking-widest">Password</label>
+                <label className="block text-[10px] font-semibold text-[#14110F] mb-1.5 uppercase tracking-wide">Password</label>
                 <div className="relative">
                   <input type={showPw ? 'text' : 'password'} required value={password}
                     onChange={e => setPassword(e.target.value)} placeholder="Min. 6 characters"
                     className={`${inputCls} pr-11`} />
                   <button type="button" onClick={() => setShowPw(v => !v)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#9CA3AF] hover:text-[#111111] transition-colors">
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#9CA3AF] hover:text-[#14110F] transition-colors">
                     {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
@@ -193,7 +193,7 @@ function RegisterContent() {
 
               {/* Confirm */}
               <div>
-                <label className="block text-[10px] font-extrabold text-[#111111] mb-1.5 uppercase tracking-widest">Confirm Password</label>
+                <label className="block text-[10px] font-semibold text-[#14110F] mb-1.5 uppercase tracking-wide">Confirm Password</label>
                 <div className="relative">
                   <input type={showPw ? 'text' : 'password'} required value={confirm}
                     onChange={e => setConfirm(e.target.value)} placeholder="Repeat password"
@@ -217,14 +217,14 @@ function RegisterContent() {
               {/* Terms */}
               <p className="text-[#9CA3AF] text-xs leading-relaxed">
                 By continuing, I agree to the{' '}
-                <span className="text-[#E84545] cursor-pointer hover:underline">Terms of Use</span>
+                <span className="text-[#9C2B2B] cursor-pointer hover:underline">Terms of Use</span>
                 {' & '}
-                <span className="text-[#E84545] cursor-pointer hover:underline">Privacy Policy</span>
+                <span className="text-[#9C2B2B] cursor-pointer hover:underline">Privacy Policy</span>
               </p>
 
               {/* Submit */}
               <button type="submit" disabled={loading}
-                className="w-full py-4 bg-[#111111] text-white font-extrabold text-xs tracking-widest uppercase hover:bg-[#E84545] transition-colors disabled:opacity-60 flex items-center justify-center gap-2">
+                className="w-full py-4 bg-[#14110F] text-white font-semibold text-xs tracking-wide uppercase hover:bg-[#9C2B2B] transition-colors disabled:opacity-60 flex items-center justify-center gap-2">
                 {loading
                   ? <><Loader2 className="w-4 h-4 animate-spin" /> CREATING ACCOUNT...</>
                   : 'CREATE ACCOUNT'}
@@ -238,7 +238,7 @@ function RegisterContent() {
             </div>
 
             <Link href={`/login${redirect !== '/' ? `?redirect=${redirect}` : ''}`}
-              className="w-full flex items-center justify-center py-3.5 border-2 border-[#111111] text-[#111111] font-extrabold text-xs tracking-widest uppercase hover:bg-[#111111] hover:text-white transition-colors">
+              className="w-full flex items-center justify-center py-3.5 border-2 border-[#14110F] text-[#14110F] font-semibold text-xs tracking-wide uppercase hover:bg-[#14110F] hover:text-white transition-colors">
               SIGN IN INSTEAD
             </Link>
           </motion.div>

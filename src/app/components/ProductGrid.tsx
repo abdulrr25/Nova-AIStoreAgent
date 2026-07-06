@@ -50,7 +50,7 @@ export default function ProductGrid() {
     return (
       <div className="flex items-center justify-center min-h-[400px] bg-[#F5F5F0]">
         <div className="text-center">
-          <Loader2 className="w-10 h-10 animate-spin text-[#E84545] mx-auto mb-3" />
+          <Loader2 className="w-10 h-10 animate-spin text-[#9C2B2B] mx-auto mb-3" />
           <p className="text-[#6B7280] text-sm tracking-wide">Loading products...</p>
         </div>
       </div>
@@ -77,11 +77,11 @@ export default function ProductGrid() {
                 {/* Mobile filter trigger */}
                 <button
                   onClick={() => setIsFilterOpen(true)}
-                  className="lg:hidden flex items-center gap-2 text-[10px] font-bold text-[#111111] uppercase tracking-widest border border-[#E5E7EB] px-3 py-2 hover:border-[#E84545] hover:text-[#E84545] transition-colors rounded-sm">
+                  className="lg:hidden flex items-center gap-2 text-[10px] font-bold text-[#14110F] uppercase tracking-wide border border-[#E5E7EB] px-3 py-2 hover:border-[#9C2B2B] hover:text-[#9C2B2B] transition-colors rounded-xl">
                   <SlidersHorizontal className="w-3.5 h-3.5" /> Filter
                 </button>
                 <span className="text-xs text-[#6B7280] font-medium">
-                  <span className="font-bold text-[#111111]">{sorted.length}</span> items
+                  <span className="font-bold text-[#14110F]">{sorted.length}</span> items
                 </span>
               </div>
 
@@ -90,20 +90,20 @@ export default function ProductGrid() {
                 <div className="relative">
                   <button
                     onClick={() => setShowSort(v => !v)}
-                    className="flex items-center gap-1.5 text-[10px] font-bold text-[#111111] uppercase tracking-widest hover:text-[#E84545] transition-colors">
+                    className="flex items-center gap-1.5 text-[10px] font-bold text-[#14110F] uppercase tracking-wide hover:text-[#9C2B2B] transition-colors">
                     Sort: {SORT_OPTIONS.find(o => o.value === sortBy)?.label}
                     <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showSort ? 'rotate-180' : ''}`} />
                   </button>
                   {showSort && (
                     <>
                       <div className="fixed inset-0 z-10" onClick={() => setShowSort(false)} />
-                      <div className="absolute right-0 top-full mt-2 bg-white shadow-xl border border-[#E5E7EB] w-52 z-20 rounded-sm">
+                      <div className="absolute right-0 top-full mt-2 bg-white shadow-xl border border-[#E5E7EB] w-52 z-20 rounded-xl">
                         {SORT_OPTIONS.map(opt => (
                           <button key={opt.value} onClick={() => { setSortBy(opt.value); setShowSort(false); }}
                             className={`w-full text-left px-4 py-2.5 text-xs transition-colors ${
                               sortBy === opt.value
-                                ? 'text-[#E84545] font-bold bg-[#FFF0F0]'
-                                : 'text-[#111111] hover:bg-[#F9FAFB]'
+                                ? 'text-[#9C2B2B] font-bold bg-[#F5E9E7]'
+                                : 'text-[#14110F] hover:bg-[#F9FAFB]'
                             }`}>
                             {opt.label}
                           </button>
@@ -114,15 +114,15 @@ export default function ProductGrid() {
                 </div>
 
                 {/* View toggle */}
-                <div className="flex items-center gap-0.5 border border-[#E5E7EB] rounded-sm p-0.5">
+                <div className="flex items-center gap-0.5 border border-[#E5E7EB] rounded-xl p-0.5">
                   <button
                     onClick={() => setGridView('grid')}
-                    className={`p-1.5 rounded-sm transition-colors ${gridView === 'grid' ? 'bg-[#111111] text-white' : 'text-[#6B7280] hover:text-[#111111]'}`}>
+                    className={`p-1.5 rounded-xl transition-colors ${gridView === 'grid' ? 'bg-[#14110F] text-white' : 'text-[#6B7280] hover:text-[#14110F]'}`}>
                     <Grid2X2 className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={() => setGridView('list')}
-                    className={`p-1.5 rounded-sm transition-colors ${gridView === 'list' ? 'bg-[#111111] text-white' : 'text-[#6B7280] hover:text-[#111111]'}`}>
+                    className={`p-1.5 rounded-xl transition-colors ${gridView === 'list' ? 'bg-[#14110F] text-white' : 'text-[#6B7280] hover:text-[#14110F]'}`}>
                     <LayoutList className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -137,12 +137,12 @@ export default function ProductGrid() {
               {sorted.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-28 text-center">
                   <Package className="w-16 h-16 text-[#E5E7EB] mx-auto mb-4" />
-                  <p className="text-xl font-extrabold text-[#111111] mb-2 uppercase tracking-wide">No results found</p>
+                  <p className="font-serif text-2xl text-[#14110F] mb-2">No results found</p>
                   <p className="text-[#6B7280] text-sm mb-6 max-w-xs">Try adjusting your filters or searching for something different.</p>
                   <button
                     onClick={clearFilters}
-                    className="border-2 border-[#111111] text-[#111111] px-8 py-2.5 text-xs font-bold tracking-widest uppercase hover:bg-[#111111] hover:text-white transition-colors rounded-sm">
-                    CLEAR ALL FILTERS
+                    className="border border-[#14110F] text-[#14110F] px-8 py-2.5 text-sm font-medium hover:bg-[#14110F] hover:text-white transition-colors rounded-full">
+                    Clear all filters
                   </button>
                 </div>
               ) : (

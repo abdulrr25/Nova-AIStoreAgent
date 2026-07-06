@@ -37,7 +37,7 @@ const Testimonial = () => {
             <button className='bg-black text-white px-4 py-2 rounded-md text-sm sm:text-base hover:bg-accent transition-colors'>
               25% DISCOUNT
             </button>
-            <h2 className='font-extrabold text-xl sm:text-2xl text-[#272727] text-center'>
+            <h2 className='font-semibold text-xl sm:text-2xl text-[#272727] text-center'>
               SUMMER COLLECTION
             </h2>
             <p className='text-gray-500 text-sm sm:text-lg text-center'>

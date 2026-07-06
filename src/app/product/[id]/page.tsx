@@ -120,9 +120,9 @@ export default function ProductDetailPage() {
       <div className="min-h-screen bg-[#F5F5F0]">
         <Header />
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-          <p className="text-2xl font-bold text-[#111111] mb-2">Product Not Found</p>
+          <p className="text-2xl font-bold text-[#14110F] mb-2">Product Not Found</p>
           <p className="text-[#6B7280] mb-6">This product doesn't exist or has been removed.</p>
-          <Link href="/shop" className="bg-[#111111] text-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-[#E84545] transition-colors rounded-sm">
+          <Link href="/shop" className="bg-[#14110F] text-white px-8 py-3 text-xs font-bold tracking-wide uppercase hover:bg-[#9C2B2B] transition-colors rounded-xl">
             BACK TO SHOP
           </Link>
         </div>
@@ -135,7 +135,7 @@ export default function ProductDetailPage() {
       <div className="min-h-screen bg-[#F5F5F0]">
         <Header />
         <div className="flex items-center justify-center min-h-[60vh]">
-          <Loader2 className="w-10 h-10 animate-spin text-[#E84545]" />
+          <Loader2 className="w-10 h-10 animate-spin text-[#9C2B2B]" />
         </div>
       </div>
     );
@@ -148,14 +148,14 @@ export default function ProductDetailPage() {
       <Header />
       <div className="max-w-[1400px] mx-auto px-4 py-8">
         {/* Back button */}
-        <button onClick={() => router.back()} className="inline-flex items-center gap-2 text-sm text-[#6B7280] hover:text-[#E84545] transition-colors mb-6 uppercase tracking-wide text-[10px] font-bold">
+        <button onClick={() => router.back()} className="inline-flex items-center gap-2 text-sm text-[#6B7280] hover:text-[#9C2B2B] transition-colors mb-6 uppercase tracking-wide text-[10px] font-bold">
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
           {/* ── LEFT: Image ── */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <div className="relative overflow-hidden bg-white rounded-sm border border-[#E5E7EB] group" style={{ aspectRatio: '3/4' }}>
+            <div className="relative overflow-hidden bg-white rounded-2xl border border-[#E5E7EB] group" style={{ aspectRatio: '3/4' }}>
               {!imgError ? (
                 <Image
                   src={product.imageUrl}
@@ -175,19 +175,19 @@ export default function ProductDetailPage() {
               )}
               {!inStock && (
                 <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
-                  <span className="text-sm font-bold text-[#6B7280] tracking-widest uppercase border border-[#E5E7EB] px-4 py-2">
+                  <span className="text-sm font-bold text-[#6B7280] tracking-wide uppercase border border-[#E5E7EB] px-4 py-2">
                     OUT OF STOCK
                   </span>
                 </div>
               )}
               <button
                 onClick={() => toggleWishlist(product.id)}
-                className="absolute top-4 right-4 p-2.5 bg-white shadow-md hover:shadow-lg transition-all rounded-sm">
-                <Heart className={`w-5 h-5 transition-all ${wishlisted ? 'fill-[#E84545] text-[#E84545]' : 'text-[#6B7280]'}`} />
+                className="absolute top-4 right-4 p-2.5 bg-white shadow-md hover:shadow-lg transition-all rounded-xl">
+                <Heart className={`w-5 h-5 transition-all ${wishlisted ? 'fill-[#9C2B2B] text-[#9C2B2B]' : 'text-[#6B7280]'}`} />
               </button>
               {discountPct >= 20 && (
                 <div className="absolute top-4 left-4">
-                  <span className="bg-[#E84545] text-white text-[10px] font-bold px-3 py-1.5 rounded-sm tracking-wider">
+                  <span className="bg-[#9C2B2B] text-white text-[10px] font-bold px-3 py-1.5 rounded-xl tracking-wider">
                     {discountPct}% OFF
                   </span>
                 </div>
@@ -199,15 +199,15 @@ export default function ProductDetailPage() {
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="py-2">
             {/* Category breadcrumb */}
             <div className="flex items-center gap-2 text-[10px] mb-3">
-              <Link href="/" className="text-[#6B7280] hover:text-[#E84545] transition-colors uppercase tracking-widest font-medium">Home</Link>
+              <Link href="/" className="text-[#6B7280] hover:text-[#9C2B2B] transition-colors uppercase tracking-wide font-medium">Home</Link>
               <span className="text-[#D1D5DB]">/</span>
-              <Link href="/shop" className="text-[#6B7280] hover:text-[#E84545] transition-colors uppercase tracking-widest font-medium">Shop</Link>
+              <Link href="/shop" className="text-[#6B7280] hover:text-[#9C2B2B] transition-colors uppercase tracking-wide font-medium">Shop</Link>
               <span className="text-[#D1D5DB]">/</span>
-              <span className="text-[#E84545] font-bold uppercase tracking-widest">{product.category.name}</span>
+              <span className="text-[#9C2B2B] font-bold uppercase tracking-wide">{product.category.name}</span>
             </div>
 
             {/* Name */}
-            <h1 className="text-2xl md:text-3xl font-extrabold text-[#111111] mb-3 leading-tight">
+            <h1 className="font-serif text-3xl md:text-4xl text-[#14110F] mb-3 leading-tight">
               {product.name}
             </h1>
 
@@ -221,9 +221,9 @@ export default function ProductDetailPage() {
 
             {/* Price row */}
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-3xl font-extrabold text-[#111111]">{formatPrice(product.price)}</span>
+              <span className="text-3xl font-semibold text-[#14110F]">{formatPrice(product.price)}</span>
               <span className="text-[#9CA3AF] line-through text-lg">{formatPrice(mrp)}</span>
-              <span className="bg-[#E84545] text-white text-xs font-bold px-2 py-1 rounded-sm">{discountPct}% OFF</span>
+              <span className="bg-[#9C2B2B] text-white text-xs font-bold px-2 py-1 rounded-xl">{discountPct}% OFF</span>
             </div>
             <p className="text-[#16A34A] text-xs font-semibold mb-5">Inclusive of all taxes</p>
 
@@ -235,14 +235,14 @@ export default function ProductDetailPage() {
                   {product.stock <= 5 ? `Only ${product.stock} left in stock — hurry!` : 'In Stock'}
                 </span>
               ) : (
-                <span className="text-[#E84545] text-sm font-bold">Out of Stock</span>
+                <span className="text-[#9C2B2B] text-sm font-bold">Out of Stock</span>
               )}
             </div>
 
             {/* Size selector */}
             {sizes.length > 0 && (
               <div className="mb-5">
-                <p className="text-[10px] font-bold text-[#111111] uppercase tracking-widest mb-2">
+                <p className="text-[10px] font-bold text-[#14110F] uppercase tracking-wide mb-2">
                   Select Size
                   {selectedSize && <span className="ml-2 text-[#6B7280] font-normal normal-case">{selectedSize}</span>}
                 </p>
@@ -251,10 +251,10 @@ export default function ProductDetailPage() {
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size.trim())}
-                      className={`px-4 py-2 text-xs font-bold tracking-wider border transition-all rounded-sm ${
+                      className={`px-4 py-2 text-xs font-bold tracking-wider border transition-all rounded-xl ${
                         selectedSize === size.trim()
-                          ? 'bg-[#E84545] text-white border-[#E84545]'
-                          : 'border-[#D1D5DB] text-[#111111] hover:border-[#E84545] hover:text-[#E84545]'
+                          ? 'bg-[#9C2B2B] text-white border-[#9C2B2B]'
+                          : 'border-[#D1D5DB] text-[#14110F] hover:border-[#9C2B2B] hover:text-[#9C2B2B]'
                       }`}>
                       {size.trim()}
                     </button>
@@ -266,7 +266,7 @@ export default function ProductDetailPage() {
             {/* Color selector */}
             {colors.length > 0 && (
               <div className="mb-5">
-                <p className="text-[10px] font-bold text-[#111111] uppercase tracking-widest mb-2">
+                <p className="text-[10px] font-bold text-[#14110F] uppercase tracking-wide mb-2">
                   Select Color
                   {selectedColor && <span className="ml-2 text-[#6B7280] font-normal normal-case">{selectedColor}</span>}
                 </p>
@@ -275,10 +275,10 @@ export default function ProductDetailPage() {
                     <button
                       key={color}
                       onClick={() => setSelectedColor(color.trim())}
-                      className={`px-4 py-2 text-xs font-medium border transition-all rounded-sm ${
+                      className={`px-4 py-2 text-xs font-medium border transition-all rounded-xl ${
                         selectedColor === color.trim()
-                          ? 'bg-[#111111] text-white border-[#111111]'
-                          : 'border-[#D1D5DB] text-[#111111] hover:border-[#111111]'
+                          ? 'bg-[#14110F] text-white border-[#14110F]'
+                          : 'border-[#D1D5DB] text-[#14110F] hover:border-[#14110F]'
                       }`}>
                       {color.trim()}
                     </button>
@@ -289,19 +289,19 @@ export default function ProductDetailPage() {
 
             {/* Quantity selector */}
             <div className="mb-6">
-              <p className="text-[10px] font-bold text-[#111111] uppercase tracking-widest mb-2">Quantity</p>
-              <div className="flex items-center gap-0 border border-[#E5E7EB] w-fit rounded-sm overflow-hidden">
+              <p className="text-[10px] font-bold text-[#14110F] uppercase tracking-wide mb-2">Quantity</p>
+              <div className="flex items-center gap-0 border border-[#E5E7EB] w-fit rounded-xl overflow-hidden">
                 <button
                   onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                  className="w-10 h-10 flex items-center justify-center text-[#111111] hover:bg-[#F3F4F6] font-bold text-lg transition-colors">
+                  className="w-10 h-10 flex items-center justify-center text-[#14110F] hover:bg-[#F3F4F6] font-bold text-lg transition-colors">
                   −
                 </button>
-                <span className="w-12 h-10 flex items-center justify-center text-sm font-bold text-[#111111] border-x border-[#E5E7EB]">
+                <span className="w-12 h-10 flex items-center justify-center text-sm font-bold text-[#14110F] border-x border-[#E5E7EB]">
                   {quantity}
                 </span>
                 <button
                   onClick={() => setQuantity(q => Math.min(product.stock, q + 1))}
-                  className="w-10 h-10 flex items-center justify-center text-[#111111] hover:bg-[#F3F4F6] font-bold text-lg transition-colors">
+                  className="w-10 h-10 flex items-center justify-center text-[#14110F] hover:bg-[#F3F4F6] font-bold text-lg transition-colors">
                   +
                 </button>
               </div>
@@ -313,34 +313,34 @@ export default function ProductDetailPage() {
                 whileTap={{ scale: 0.97 }}
                 onClick={handleAddToCart}
                 disabled={!inStock}
-                className={`flex-1 py-4 text-xs font-extrabold tracking-widest uppercase flex items-center justify-center gap-2 transition-all rounded-sm ${
+                className={`flex-1 py-4 text-sm font-medium flex items-center justify-center gap-2 transition-all rounded-full ${
                   !inStock
                     ? 'bg-[#F3F4F6] text-[#9CA3AF] cursor-not-allowed'
                     : addedToCart
                     ? 'bg-[#16A34A] text-white'
-                    : 'bg-[#111111] text-white hover:bg-[#E84545]'
+                    : 'bg-[#14110F] text-white hover:bg-[#9C2B2B]'
                 }`}>
                 {addedToCart
-                  ? <><Check className="w-4 h-4" /> ADDED TO BAG</>
-                  : <><ShoppingBag className="w-4 h-4" /> ADD TO BAG</>}
+                  ? <><Check className="w-4 h-4" /> Added to Bag</>
+                  : <><ShoppingBag className="w-4 h-4" /> Add to Bag</>}
               </motion.button>
 
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={() => toggleWishlist(product.id)}
-                className={`flex-1 sm:flex-none sm:px-8 py-4 text-xs font-extrabold tracking-widest uppercase flex items-center justify-center gap-2 transition-all border-2 rounded-sm ${
+                className={`flex-1 sm:flex-none sm:px-8 py-4 text-sm font-medium flex items-center justify-center gap-2 transition-all border rounded-full ${
                   wishlisted
-                    ? 'border-[#E84545] bg-[#FFF0F0] text-[#E84545]'
-                    : 'border-[#E84545] text-[#E84545] hover:bg-[#FFF0F0]'
+                    ? 'border-[#9C2B2B] bg-[#F5E9E7] text-[#9C2B2B]'
+                    : 'border-[#9C2B2B] text-[#9C2B2B] hover:bg-[#F5E9E7]'
                 }`}>
-                <Heart className={`w-4 h-4 ${wishlisted ? 'fill-[#E84545]' : ''}`} />
-                {wishlisted ? 'WISHLISTED' : 'WISHLIST'}
+                <Heart className={`w-4 h-4 ${wishlisted ? 'fill-[#9C2B2B]' : ''}`} />
+                {wishlisted ? 'Wishlisted' : 'Wishlist'}
               </motion.button>
             </div>
 
             {/* Description */}
             <div className="mb-8 pb-8 border-b border-[#E5E7EB]">
-              <p className="text-[10px] font-bold text-[#111111] uppercase tracking-widest mb-2">Description</p>
+              <p className="text-[10px] font-bold text-[#14110F] uppercase tracking-wide mb-2">Description</p>
               <p className="text-[#6B7280] text-sm leading-relaxed">{product.description}</p>
             </div>
 
@@ -352,11 +352,11 @@ export default function ProductDetailPage() {
                 { icon: Shield,    label: 'Authentic',     sub: '100% genuine products' },
               ].map(({ icon: Icon, label, sub }) => (
                 <div key={label} className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-[#F3F4F6] flex items-center justify-center rounded-sm flex-shrink-0">
-                    <Icon className="w-4 h-4 text-[#111111]" />
+                  <div className="w-9 h-9 bg-[#F3F4F6] flex items-center justify-center rounded-xl flex-shrink-0">
+                    <Icon className="w-4 h-4 text-[#14110F]" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-[#111111] uppercase tracking-wide">{label}</p>
+                    <p className="text-[10px] font-bold text-[#14110F] uppercase tracking-wide">{label}</p>
                     <p className="text-[#6B7280] text-[10px]">{sub}</p>
                   </div>
                 </div>
@@ -370,12 +370,12 @@ export default function ProductDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-16 bg-white rounded-sm border border-[#E5E7EB] p-6 md:p-8"
+          className="mt-16 bg-white rounded-xl border border-[#E5E7EB] p-6 md:p-8"
         >
           <div className="flex flex-col md:flex-row md:items-start gap-8 mb-8">
             {/* Rating summary */}
             <div className="flex-shrink-0 text-center md:text-left md:pr-8 md:border-r md:border-[#E5E7EB]">
-              <p className="text-5xl font-extrabold text-[#111111]">{avgRating.toFixed(1)}</p>
+              <p className="text-5xl font-semibold text-[#14110F]">{avgRating.toFixed(1)}</p>
               <StarRating rating={avgRating} />
               <p className="text-[#6B7280] text-sm mt-1">{totalReviews} reviews</p>
             </div>
@@ -400,7 +400,7 @@ export default function ProductDetailPage() {
 
           {/* Individual reviews */}
           <div className="border-t border-[#E5E7EB] pt-6 space-y-6">
-            <p className="text-[10px] font-bold text-[#111111] uppercase tracking-widest">Customer Reviews</p>
+            <p className="text-[10px] font-bold text-[#14110F] uppercase tracking-wide">Customer Reviews</p>
             {displayedReviews.map((review, i) => (
               <motion.div
                 key={i}
@@ -411,11 +411,11 @@ export default function ProductDetailPage() {
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-[#E84545] text-white rounded-full flex items-center justify-center text-xs font-bold">
+                    <div className="w-8 h-8 bg-[#9C2B2B] text-white rounded-full flex items-center justify-center text-xs font-bold">
                       {review.reviewer[0]}
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-[#111111]">{review.reviewer}</p>
+                      <p className="text-sm font-bold text-[#14110F]">{review.reviewer}</p>
                       <p className="text-[10px] text-[#9CA3AF]">{review.daysAgo} days ago</p>
                     </div>
                   </div>
@@ -423,7 +423,7 @@ export default function ProductDetailPage() {
                 </div>
                 <p className="text-sm text-[#6B7280] leading-relaxed ml-11">{review.text}</p>
                 <div className="flex items-center gap-4 mt-2 ml-11">
-                  <button className="flex items-center gap-1 text-xs text-[#9CA3AF] hover:text-[#E84545] transition-colors">
+                  <button className="flex items-center gap-1 text-xs text-[#9CA3AF] hover:text-[#9C2B2B] transition-colors">
                     <ThumbsUp className="w-3 h-3" /> Helpful ({review.helpful})
                   </button>
                 </div>
@@ -433,7 +433,7 @@ export default function ProductDetailPage() {
             {reviews.length > 3 && (
               <button
                 onClick={() => setShowAllReviews(!showAllReviews)}
-                className="flex items-center gap-1 text-sm font-bold text-[#E84545] hover:text-[#CC2B2B] transition-colors mx-auto"
+                className="flex items-center gap-1 text-sm font-bold text-[#9C2B2B] hover:text-[#7A1F1F] transition-colors mx-auto"
               >
                 {showAllReviews ? <><ChevronUp className="w-4 h-4" /> Show Less</> : <><ChevronDown className="w-4 h-4" /> Show All {reviews.length} Reviews</>}
               </button>
@@ -450,8 +450,8 @@ export default function ProductDetailPage() {
             className="mt-16"
           >
             <div className="mb-6">
-              <p className="text-[#E84545] text-[10px] font-bold tracking-widest uppercase mb-1">Based on this product</p>
-              <h2 className="text-xl font-extrabold text-[#111111] uppercase tracking-wide">You May Also Like</h2>
+              <p className="text-[#9C2B2B] text-[11px] font-medium tracking-wide uppercase mb-1">Based on this product</p>
+              <h2 className="font-serif text-2xl text-[#14110F]">You may also like</h2>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {suggestedProducts.map((p, i) => (
